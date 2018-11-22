@@ -4,16 +4,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from "redux";
 import SearchBox from './components/SearchBox'
 import SearchResultsContainer from './containers/SearchResultsContainer';
+import "bulma/css/bulma.css";
 
 class App extends React.Component {
 
   render() {
-    return (
-      <div className="App">
-        <SearchBox/>
-        <SearchResultsContainer/>
-      </div>
-    );
+    return <div className="container">
+          <SearchBox />
+          <SearchResultsContainer />
+      </div>;
   }
 }
 

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { fetchHansard } from "../actions";
 
+import SearchResult from "../components/SearchResult";
+
 
 class SearchResultsContainer extends Component {
 
@@ -13,8 +15,11 @@ class SearchResultsContainer extends Component {
 
   render() {
     return (
-      <div>
-        
+      <div className="container is-fluid">
+        <div className="notification">
+          {this.props.searchResults.rows &&
+            this.props.searchResults.rows.map(result => <SearchResult result={result} />)}
+      </div>
       </div>
     )
   }

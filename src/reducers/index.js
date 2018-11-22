@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import thunk from 'redux-thunk';
 
 import {
     FETCH_HANSARD,
@@ -7,6 +6,7 @@ import {
 
 
 const hansardReducer = (state = [], action) => {
+
     switch (action.type) {
         case FETCH_HANSARD:
             console.log("inside reducer")
@@ -14,6 +14,7 @@ const hansardReducer = (state = [], action) => {
         default:
             return state
     }
+
 }
 
 const rootReducer = combineReducers({
