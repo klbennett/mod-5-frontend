@@ -1,12 +1,3 @@
-import {
-    FETCH_HANSARD,
-} from './types'
-
-
-
-export function fetchHansard(dispatch, result) {
-    dispatch({
-        type: 'FETCH_HANSARD',
-        payload: result })
-    };
-
+export * from "./alert.actions";
+export * from "./user.actions";
+export * from "./hansard.actions";

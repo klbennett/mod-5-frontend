@@ -1,34 +1,55 @@
 import React from 'react';
-import * as Actions from "./actions";
+import { BrowserRouter as Router } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { bindActionCreators } from "redux";
+import { history } from "./helpers";
+import { alertActions } from "./actions";
+
+import "bulma/css/bulma.css";
+
+
 import SearchBox from './components/SearchBox'
 import SearchResultsContainer from './containers/SearchResultsContainer';
-import "bulma/css/bulma.css";
+import LogInContainer from "./containers/LogInContainer";
+import Nav from "./containers/Nav";
+
+import * as action from './actions'
+
 
 class App extends React.Component {
 
+  constructor(props) {
+    super(props);
+
+    const { dispatch } = this.props;
+    history.listen((location, action) => {
+      // clear alert on location change
+      dispatch(alertActions.clear());
+    });
+  }
+
   render() {
-    return <div className="container">
-          <SearchBox />
-          <SearchResultsContainer />
-      </div>;
+
+    return (
+          <Router>
+            <LogInContainer/>
+          {/* <Nav/>
+          {/* <SearchBox />
+          <SearchResultsContainer /> */}
+      </Router>
+    )
   }
 }
 
 function mapStateToProps(state) {
+  const { alert } = state;
   return {
-    searchResults: state.searchResults
+    alert
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: bindActionCreators(Actions, dispatch)
-  };
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+
+export default connect(mapStateToProps)(App)
 
 
 

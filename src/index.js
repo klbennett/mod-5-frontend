@@ -3,11 +3,28 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
-import thunk from "redux-thunk";
+import { createLogger } from "redux-logger";
+import { composeWithDevTools } from "redux-devtools-extension";
+
+import thunkMiddleware from "redux-thunk";
 import rootReducer from "./reducers";
 
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const loggerMiddleware = createLogger();
+
+// export const store = createStore(
+//   rootReducer,
+//   applyMiddleware(thunkMiddleware, loggerMiddleware)
+// );
+
+const composeEnhancers = composeWithDevTools({
+    // options like actionSanitizer, stateSanitizer
+});
+
+const store = createStore(
+  rootReducer,
+  composeEnhancers(applyMiddleware(thunkMiddleware, loggerMiddleware))
+);
 
 
 ReactDOM.render(
