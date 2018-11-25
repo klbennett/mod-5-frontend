@@ -1,38 +1,48 @@
-// export const alertActions = {
-//     fetchHansard,
-//     error,
-//     clear
-// };
+import { hansardConstants } from "../constants";
 
-// const MY_API_KEY = "c39a26d9c12f48dba2a5c00e35684ecc";
+const API_ENDPOINT = './response.js'
+const MY_API_KEY = "c39a26d9c12f48dba2a5c00e35684ecc";
+const EXAMPLE_REQ = "https://www.theyworkforyou.com/api/getHansard?search=climate&key=AoGBodDXTcTtBNwGn8AytXeB";
 
-// export const fetchHansard = (dispatch, result) => {
-//     return dispatch({
-//         type: FETCH_HANSARD,
-//         payload: result
-//     })
-// };
 
-// export const requestHansard = () => ({
-//     type: REQUEST_HANSARD,
-// });
+export const hansardActions = {
+    fetchHansardBegin,
+    fetchHansardSuccess,
+    fetchHansardError,
+    fetchHansard
+};
 
-// export const receivedHansard = json => ({
-//     type: RECEIVE_HANSARD,
-//     json: json,
-// });
+function fetchHansardBegin() {
+    return { type: hansardConstants.SUCCESS };
+}
 
-// export function getHansard(channel) {
-//     return function (dispatch) {
-//         dispatch(requestHansard());
-//         return fetch(`URL`)
-//             .then(
-//                 response => response.json(),
-//                 error => console.log('An error occurred.', error),
-//             )
-//             .then((json) => {
-//                 dispatch(receivedHansard(json));
-//             },
-//             );
-//     };
-// }
+function fetchHansardSuccess(json) {
+    return { type: hansardConstants.FETCH_HANSARD_SUCCESS, json }
+};
+
+function fetchHansardError(error) {
+   return { type: hansardConstants.FETCH_HANSARD_ERROR,
+    payload: { error }}
+};
+
+function fetchHansard(searchTerm) {
+    return dispatch => {
+        dispatch(fetchHansardBegin());
+        return fetch(EXAMPLE_REQ)
+          .then(handleErrors)
+          .then(res => res.json())
+          .then(json => {
+            dispatch(fetchHansardSuccess(json.results));
+            return json.results;
+          })
+          .catch(error => dispatch(fetchHansardError(error)));
+    };
+}
+
+// Handle HTTP errors since fetch won't.
+function handleErrors(response) {
+    if (!response.ok) {
+        throw Error(response.statusText);
+    }
+    return response;
+}

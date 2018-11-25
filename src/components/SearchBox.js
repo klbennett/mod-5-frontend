@@ -1,25 +1,32 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import response from '../response'
-// import { fetchHansard } from '../actions';
+import { hansardActions }  from "../actions";
+import fetchHansard from "../actions";
+import { hansard } from '../reducers/hansard.reducer';
+import { bindActionCreators } from 'react'
 
 class SearchBox extends Component {
   // Concerned with taking user input and using it as a keyword to search the api
 
-state = {
-  searchTerm: ""
-}
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchTerm: ""
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
 
-  handleSubmit = () => {
+  handleSubmit = (dispatch) => {
     const searchTerm = this.state.searchTerm;
-    const searchresult = response
-    // fetchHansard(this.props.dispatch, response)
-    console.log(response)
+    // this.props.dispatch(hansardActions.fetchHansard(searchTerm))
+    console.log(hansardActions.fetchHansard(searchTerm)) 
+    console.log(this.props)
   }
     
 
   render() {
-    return <div>
+    return (<div>
 
     <div className="level-item">
       <div className="field has-addons">
@@ -31,8 +38,17 @@ state = {
           </p>
       </div>
       </div>
-    </div>
-  }
-
+    </div>)}
 }
-export default connect()(SearchBox);
+
+const mapDispatchToProps = dispatch => ({
+ onClick: (event) => dispatch(hansardActions.fetchHansard(this.state.searchTerm))
+});
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     fetchHansard: bindActionCreators(hansardActions.fetchHansard, dispatch)
+//   };
+// }
+
+export default connect(null, mapDispatchToProps)(SearchBox);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { userActions } from "../actions";;
 
-class LogInForm extends Component {
+class SignUpForm extends Component {
 
     constructor(props) {
         super(props);
@@ -32,7 +32,7 @@ class LogInForm extends Component {
         const { dispatch } = this.props;
         this.setState({ submitted: true })
         if (username && password) {
-            dispatch(userActions.login(username, password));
+            dispatch(userActions.register(username));
         }
     }
 
@@ -65,11 +65,11 @@ class LogInForm extends Component {
 }
 
 function mapStateToProps(state) {
-  const { loggingIn } = state.authentication;
-  return {
-    loggingIn
-  };
+    const { loggingIn } = state.authentication;
+    return {
+        loggingIn
+    };
 }
 
 
-export default connect(mapStateToProps)(LogInForm);
+export default connect(mapStateToProps)(SignUpForm);

@@ -1,0 +1,5 @@
+export const hansardConstants = {
+    BEGIN: "FETCH_HANSARD_BEGIN", 
+    SUCCESS: "FETCH_HANSARD_SUCCESS",
+    FAILURE: "FETCH_HANSARD_FAILURE"
+}

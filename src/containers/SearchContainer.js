@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Box } from "bloomer";
+import React, { Component } from 'react';
+import { connect } from 'react-redux;
 
-import SearchBox from '../components/SearchBox'
+import SearchBox from '../components/SearchBox';
 
 
 export class SearchContainer extends Component {

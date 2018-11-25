@@ -3,6 +3,7 @@ import { userService } from '../services';
 import { alertActions } from '.';
 import { history } from '../helpers/history';
 
+
 export const userActions = {
     login,
     // logout,
@@ -10,6 +11,7 @@ export const userActions = {
     getAll,
     delete: _delete
 };
+
 
 function login(username, password) {
     return dispatch => {
@@ -20,6 +22,7 @@ function login(username, password) {
                 user => {
                     dispatch(success(user));
                     history.push('/');
+                    console.log('you are logged in as ' + username)
                 },
                 error => {
                     dispatch(failure(error));

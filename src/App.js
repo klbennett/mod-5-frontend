@@ -13,6 +13,7 @@ import LogInContainer from "./containers/LogInContainer";
 import Nav from "./containers/Nav";
 
 import * as action from './actions'
+import ProfilePage from './containers/ProfilePage';
 
 
 class App extends React.Component {
@@ -29,14 +30,13 @@ class App extends React.Component {
 
   render() {
 
-    return (
-          <Router>
-            <LogInContainer/>
-          {/* <Nav/>
-          {/* <SearchBox />
-          <SearchResultsContainer /> */}
-      </Router>
-    )
+    return <>
+        <Router>
+          <div>
+            <Nav />
+          </div>
+        </Router>
+      </>;
   }
 }
 

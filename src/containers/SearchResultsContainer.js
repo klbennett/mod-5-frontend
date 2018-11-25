@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
-import { fetchHansard } from "../actions";
+import { hansard } from "../actions";
 
 import SearchResult from "../components/SearchResult";
 
@@ -17,8 +17,8 @@ class SearchResultsContainer extends Component {
     return (
       <div className="container is-fluid">
         <div className="notification">
-          {this.props.searchResults.rows &&
-            this.props.searchResults.rows.map(result => <SearchResult result={result} />)}
+          {this.props.results.rows &&
+            this.props.results.rows.map(result => <SearchResult result={result} />)}
       </div>
       </div>
     )
@@ -26,7 +26,9 @@ class SearchResultsContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-  searchResults: state.hansard
+  results: state.results,
+  loading: state.results.loading,
+  error: state.results.error
 });
 
 export default connect(mapStateToProps)(SearchResultsContainer);
