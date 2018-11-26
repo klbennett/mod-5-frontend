@@ -19,7 +19,7 @@ const initState = {
                 return {
                     ...state,
                     loading: false,
-                    results: action.payload.data
+                    results: action.payload
                 };
             case hansardConstants.FAILURE:
                 return {

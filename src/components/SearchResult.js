@@ -18,6 +18,11 @@ export default class SearchResult extends Component {
       this.setState({ showModal: !this.state.showModal });
     }
 
+    saveToList = (result) => {
+      //dispatch action to add result to List
+      console.log('save to list was clicked')
+    }
+
 
     removeHTMLfromExtract = (props) => {
     // possibility to make the keyword bold

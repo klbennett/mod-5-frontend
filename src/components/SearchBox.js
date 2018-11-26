@@ -17,16 +17,19 @@ class SearchBox extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit = (dispatch) => {
+  handleSubmit = () => {
     const searchTerm = this.state.searchTerm;
-    // this.props.dispatch(hansardActions.fetchHansard(searchTerm))
-    console.log(hansardActions.fetchHansard(searchTerm)) 
-    console.log(this.props)
+    console.log(searchTerm)
+    this.props.storeSearchResults(searchTerm);
+    // Why am I unable to access dispatch?
+    console.log(this.props.storeSearchResults(searchTerm))
+    
   }
     
 
   render() {
-    return (<div>
+    return (
+    <div>
 
     <div className="level-item">
       <div className="field has-addons">
@@ -38,11 +41,12 @@ class SearchBox extends Component {
           </p>
       </div>
       </div>
-    </div>)}
+    </div>
+    )}
 }
 
 const mapDispatchToProps = dispatch => ({
- onClick: (event) => dispatch(hansardActions.fetchHansard(this.state.searchTerm))
+ storeSearchResults: (searchTerm) => dispatch(hansardActions.fetchHansard(searchTerm))
 });
 
 // function mapDispatchToProps(dispatch) {

@@ -6,9 +6,11 @@ export const userService = {
   register,
   getAll,
   getById,
-  update,
-  delete: _delete
+  // update,
+  // delete: _delete
 };
+
+const backendURL = 'http://localhost:3001/api/v1/';
 
 function login(username, password) {
   const requestOptions = {
@@ -20,7 +22,7 @@ function login(username, password) {
     body: JSON.stringify({ username, password })
   };
 
-  return fetch('http://localhost:3001/api/v1/login', requestOptions)
+  return fetch(backendURL + '/login', requestOptions)
     .then(handleResponse)
     .then(user => {
       // login successful if there's a jwt token in the response
@@ -66,25 +68,25 @@ function register(user) {
   return fetch(`/users/register`, requestOptions).then(handleResponse);
 }
 
-function update(user) {
-  const requestOptions = {
-    method: "PUT",
-    headers: { ...authHeader(), "Content-Type": "application/json" },
-    body: JSON.stringify(user)
-  };
+// function update(user) {
+//   const requestOptions = {
+//     method: "PUT",
+//     headers: { ...authHeader(), "Content-Type": "application/json" },
+//     body: JSON.stringify(user)
+//   };
 
-  return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);
-}
+//   return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);
+// }
 
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-  const requestOptions = {
-    method: "DELETE",
-    headers: authHeader()
-  };
+// // prefixed function name with underscore because delete is a reserved word in javascript
+// function _delete(id) {
+//   const requestOptions = {
+//     method: "DELETE",
+//     headers: authHeader()
+//   };
 
-  return fetch(`/users/${id}`, requestOptions).then(handleResponse);
-}
+//   return fetch(`/users/${id}`, requestOptions).then(handleResponse);
+// }
 
 function handleResponse(response) {
   return response.text().then(text => {

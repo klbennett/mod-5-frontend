@@ -18,7 +18,7 @@ export default class FullTextModal extends Component {
             <p>{this.props.fullText}</p>
           </section>
           <footer className="modal-card-foot">
-            <button className="button is-success">Save to list</button>
+          <button className="button is-success" onClick={() => this.props.saveToList(this)}>Save to list</button>
             <button className="button" aria-label="close" onClick={() => this.props.closeModal()}>
               Close
             </button>

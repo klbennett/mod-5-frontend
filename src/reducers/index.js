@@ -7,11 +7,11 @@ import { hansard } from "./hansard.reducer";
 import { alert } from './alert.reducer';
 
 const rootReducer = combineReducers({
+  alert,
   authentication,
   hansard,
   registration,
   users,
-  alert
 });
 
 export default rootReducer;

@@ -13,33 +13,39 @@ export const hansardActions = {
 };
 
 function fetchHansardBegin() {
-    return { type: hansardConstants.SUCCESS };
+    return {
+        type: hansardConstants.BEGIN
+    };
 }
 
-function fetchHansardSuccess(json) {
-    return { type: hansardConstants.FETCH_HANSARD_SUCCESS, json }
+function fetchHansardSuccess(payload) {
+    return {
+        type: hansardConstants.SUCCESS, payload
+    }
 };
 
 function fetchHansardError(error) {
-   return { type: hansardConstants.FETCH_HANSARD_ERROR,
-    payload: { error }}
+   return {
+       type: hansardConstants.FAILURE,
+       payload: { error }
+    }
 };
 
 function fetchHansard(searchTerm) {
     return dispatch => {
         dispatch(fetchHansardBegin());
-        return fetch(EXAMPLE_REQ)
+        return fetch(`https://www.theyworkforyou.com/api/getHansard?search=${searchTerm}&key=AoGBodDXTcTtBNwGn8AytXeB`)
           .then(handleErrors)
           .then(res => res.json())
           .then(json => {
-            dispatch(fetchHansardSuccess(json.results));
-            return json.results;
+            dispatch(fetchHansardSuccess(json.rows));
+            return json.rows;
           })
           .catch(error => dispatch(fetchHansardError(error)));
     };
 }
 
-// Handle HTTP errors since fetch won't.
+// Promise will resolve if an error is returned. This handles HTTP errors
 function handleErrors(response) {
     if (!response.ok) {
         throw Error(response.statusText);

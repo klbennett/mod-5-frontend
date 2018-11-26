@@ -21,12 +21,12 @@ class LogInForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         const { name, value } = e.target;
         this.setState({ [name]: value });
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         const { username, password } = this.state;
         const { dispatch } = this.props;
@@ -46,7 +46,7 @@ class LogInForm extends Component {
         return (
             <div className="container">
                 <form className="white" onSubmit={this.handleSubmit}>
-                    <h5 className="grey-text text-darken-3">Sign In</h5>
+                    <h5 className="grey-text text-darken-3">Log In</h5>
                     <div className="input-field">
                         <label htmlFor="username">Username</label>
                         <input type="username" id='username' onChange={this.handleChange} />
