@@ -16,8 +16,12 @@ class ProfilePage extends Component {
 }
 
 const mapStateToProps = (state) => {
-    return { authentication: state.authentication };
+    return { 
+      authentication: state.authentication
+
+    };
 };
+
 
 export default connect(mapStateToProps)(ProfilePage)
 

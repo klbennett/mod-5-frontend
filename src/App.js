@@ -7,9 +7,6 @@ import { alertActions } from "./actions";
 import "bulma/css/bulma.css";
 
 
-import SearchBox from './components/SearchBox'
-import SearchResultsContainer from './containers/SearchResultsContainer';
-import LogInContainer from "./containers/LogInContainer";
 import Nav from "./containers/Nav";
 
 import * as action from './actions'

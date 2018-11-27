@@ -9,7 +9,8 @@ export const hansardActions = {
     fetchHansardBegin,
     fetchHansardSuccess,
     fetchHansardError,
-    fetchHansard
+    fetchHansard,
+    saveSearchTerm,
 };
 
 function fetchHansardBegin() {
@@ -24,6 +25,12 @@ function fetchHansardSuccess(payload) {
     }
 };
 
+function saveSearchTerm(payload) {
+    return {
+        type: hansardConstants.SEARCH_TERM, payload
+    };
+};
+
 function fetchHansardError(error) {
    return {
        type: hansardConstants.FAILURE,
@@ -34,6 +41,7 @@ function fetchHansardError(error) {
 function fetchHansard(searchTerm) {
     return dispatch => {
         dispatch(fetchHansardBegin());
+        dispatch(saveSearchTerm(searchTerm));
         return fetch(`https://www.theyworkforyou.com/api/getHansard?search=${searchTerm}&key=AoGBodDXTcTtBNwGn8AytXeB`)
           .then(handleErrors)
           .then(res => res.json())

@@ -28,6 +28,11 @@ const initState = {
                     error: action.payload.error,
                     results: [] // change if I do not want to reset results
                 };
+            case hansardConstants.SEARCH_TERM:
+                return {
+                    ...state,
+                    searchTerm: action.payload
+                }
             default:
                 return state
         }

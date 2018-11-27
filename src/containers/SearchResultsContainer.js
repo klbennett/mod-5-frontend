@@ -3,32 +3,34 @@ import { connect } from "react-redux";
 import { hansard } from "../actions";
 
 import SearchResult from "../components/SearchResult";
+import ListCreationForm from "../components/ListCreationForm";
 
 
 class SearchResultsContainer extends Component {
 
-// Concerned with rendering the search results onto the page
-
-  // componentDidMount() {
-  //   this.props.dispatch(fetchHansard());
-  // }
-
   render() {
-    return (
-      <div className="container is-fluid">
+   
+    return <div className="container is-fluid">
         <div className="notification">
-          {this.props.results.rows &&
-            this.props.results.rows.map(result => <SearchResult result={result} />)}
-      </div>
-      </div>
-    )
+          {this.props.searchTerm && <h1>
+              Your results for <b> "{this.props.searchTerm}" </b>
+            </h1>}
+          <ListCreationForm/>
+          {this.props.results ? this.props.results
+              .filter(result => result.body.length > 5)
+              .map(result => (
+                <SearchResult result={result} />
+              )) : <h1> Sorry, no results were found for that query. </h1>}
+        </div>
+      </div>;
   }
 }
 
 const mapStateToProps = state => ({
-  results: state.results,
-  loading: state.results.loading,
-  error: state.results.error
+  searchTerm: state.hansard.searchTerm,
+  results: state.hansard.results,
+  loading: state.hansard.loading,
+  error: state.hansard.error,
 });
 
 export default connect(mapStateToProps)(SearchResultsContainer);

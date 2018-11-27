@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import photo from '../images/big-ben.jpg';
-import SearchBox from '../components/SearchBox';
+import SearchContainer from './SearchContainer';
 
 export default class HomeContainer extends Component {
   render() {
@@ -12,7 +12,7 @@ export default class HomeContainer extends Component {
               <img src={photo} alt="Big Ben" />
             </div>
           </div>
-            <SearchBox />
+            <SearchContainer />
         </section>
       </div>;
   }
