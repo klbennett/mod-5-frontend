@@ -15,7 +15,7 @@ export const listActions = {
 function createListRequest() {
   return { 
       type: listConstants.CREATE_REQUEST
-};
+    };
 }
 
 function createListSuccess(payload) {
@@ -69,35 +69,49 @@ function createList(title) {
 
 function addToList(listItem, listId) {
         return dispatch => {
-            dispatch(addToListRequest());
+            // dispatch(addToListRequest());
             listService.addToList(listItem, listId)
                 .then(
                     listItem => {
-                        dispatch(addToListSuccess(listItem));
+                        // dispatch(addToListSuccess(listItem));
                         history.push('/');
                         dispatch(alertActions.success('Item was added to list'));
                         console.log('Created new list item')
                     },
                     error => {
-                        dispatch(addToListFailure(error));
+                        // dispatch(addToListFailure(error));
                         dispatch(alertActions.error(error));
                     }
                 );
         }
     }
 
-    function getUsersLists() {
-        return dispatch => {
-            dispatch(listService.getUsersLists())
-            .then(
-                userLists => {
-                dispatch(alertActions.success('Users lists retrieved'))
-                },
-                error => {
-                    dispatch(alertActions.error(error));
-                }
-            )
+function getUserListRequest() {
+  return { type: listConstants.GET_LISTS_REQUEST };
+}
 
-        }
-    } 
+function getUserListSuccess(payload) {
+  return { type: listConstants.GET_LISTS_SUCCESS, payload };
+}
+
+function getUserListFailure(message) {
+  return { type: listConstants.GET_LISTS_FAILURE, message };
+}
+
+function getUsersLists() {
+    return dispatch => {
+        dispatch(getUserListRequest())
+        listService.getUsersLists()
+        .then(
+            userLists => {
+            dispatch(getUserListSuccess(userLists))
+            dispatch(alertActions.success('Users lists retrieved'))
+            },
+            error => {
+                dispatch(alertActions.error(error));
+            }
+        )
+
+    }
+} 
 

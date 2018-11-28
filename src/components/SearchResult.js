@@ -141,8 +141,16 @@ class SearchResult extends Component {
 
 }
 
+function mapStateToProps(state) {
+  const { userLists } = state.userLists;
+  return {
+    userLists
+  };
+}
+
+
 const mapDispatchToProps = dispatch => ({
   saveSearchResultToList: (searchResult) => dispatch(listActions.addToList(searchResult, 1))
 });
 
-export default connect(null, mapDispatchToProps)(SearchResult);
+export default connect(mapStateToProps, mapDispatchToProps)(SearchResult);

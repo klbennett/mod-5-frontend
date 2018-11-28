@@ -21,7 +21,7 @@ class Nav extends Component {
                 <Link to="/">Home</Link>
               </li>
             <li>
-              { this.props.authentication.loggedIn ? <a href onClick={() => this.props.logOutUser()}>Log Out</a> : <Link to="/login">Login</Link> }
+              { this.props.authentication.loggedIn ? <a href onClick={() => {this.props.logOutUser()}}>Log Out</a> : <Link to="/login">Login</Link> }
              </li>
             <li>
               { this.props.authentication.loggedIn ? <Link to="/profile">Profile</Link> : <Link to="/signup">Sign Up</Link> }
@@ -29,13 +29,12 @@ class Nav extends Component {
             </ul>
           </div>
           <hr />
-          {/* <Route exact path="/" component={Home} /> */}
+         
   <Route path="/results" component={SearchResultsContainer} />
   <Route path="/login" component={LogInContainer} />
   <Route path="/profile" component={ProfilePage} />
   <Route path="/signup" component={SignUpContainer} />  
-  {/* <Route path="/logout" component={SearchResultsContainer} /> */}
-          <Route exact path="/" component={HomeContainer} />
+  <Route exact path="/" component={HomeContainer} />
 
           {/* <Route path="/profile" component={Profile} /> */}
         </div>

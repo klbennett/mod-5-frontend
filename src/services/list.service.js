@@ -27,8 +27,8 @@ function getList(id) {
     return fetch(backendURL + `/list/${id}`, requestOptions).then(handleResponse);
 };
 
-function getUsersLists(userid) {
-    debugger
+function getUsersLists() {
+    // debugger
     const requestOptions = {
         method: "GET",
         headers: {

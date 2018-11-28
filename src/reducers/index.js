@@ -5,7 +5,7 @@ import { registration } from './registration.reducer';
 import { users } from './users.reducer';
 import { hansard } from "./hansard.reducer";
 import { alert } from './alert.reducer';
-import { list } from './list.reducer';
+import { userlist } from './list.reducer';
 
 
 const rootReducer = combineReducers({
@@ -13,7 +13,7 @@ const rootReducer = combineReducers({
   authentication,
   hansard,
   registration,
-  list,
+  userlist,
   users
 });
 
