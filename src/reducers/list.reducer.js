@@ -22,7 +22,9 @@ export function list(state = initState, action) {
         return { ...state, loading: false, list: action.payload };
       case listConstants.ADD_FAILURE:
         return { ...state, loading: false, error: action.payload.error, list: [] }; // change if I do not want to reset results
-      default:
+    
+      
+        default:
         return state;
     }
 }

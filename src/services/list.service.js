@@ -1,6 +1,6 @@
 import { authHeader } from "../helpers";
 
-export const listService = { createList, getList, addToList, getUsersLists, getListWithListItems };
+export const listService = { createList, getList, addToList, getUsersLists };
 
 const backendURL = 'http://localhost:3001/api/v1';
 
@@ -28,6 +28,7 @@ function getList(id) {
 };
 
 function getUsersLists(userid) {
+    debugger
     const requestOptions = {
         method: "GET",
         headers: {
@@ -35,20 +36,8 @@ function getUsersLists(userid) {
         },
     };
 
-    return fetch(backendURL + `/user/${userid}`, requestOptions).then(handleResponse);
+    return fetch(backendURL + `/userlists`, requestOptions).then(handleResponse);
 };
-
-function getListWithListItems(listid) {
-    const requestOptions = {
-        method: "GET",
-        headers: {
-            ...authHeader(), "Content-Type": "application/json", "mode": "no-cors"
-        },
-    };
-
-    return fetch(backendURL + `/list/${listid}`, requestOptions).then(handleResponse);
-};
-
 
 
 function addToList(listItem, listId) {
@@ -80,7 +69,6 @@ function handleResponse(response) {
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
-
         return data;
     });
 }

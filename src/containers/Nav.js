@@ -21,14 +21,11 @@ class Nav extends Component {
                 <Link to="/">Home</Link>
               </li>
             <li>
-  { !this.props.authentication.loggedIn ? <Link to="/login">Login</Link> : <a href onClick={() => this.props.logOutUser()}>Log Out</a> }
+              { this.props.authentication.loggedIn ? <a href onClick={() => this.props.logOutUser()}>Log Out</a> : <Link to="/login">Login</Link> }
              </li>
-              <li>
-                <Link to="/signup">Sign Up</Link>
-              </li>
-              <li>
-                <Link to="/profile">Profile</Link>
-              </li>
+            <li>
+              { this.props.authentication.loggedIn ? <Link to="/profile">Profile</Link> : <Link to="/signup">Sign Up</Link> }
+            </li> 
             </ul>
           </div>
           <hr />

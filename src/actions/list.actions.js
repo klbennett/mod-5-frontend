@@ -9,9 +9,8 @@ export const listActions = {
     createListFailure,
     createList,
     addToList,
+    getUsersLists
 };
-
-
 
 function createListRequest() {
   return { 
@@ -86,4 +85,19 @@ function addToList(listItem, listId) {
                 );
         }
     }
+
+    function getUsersLists() {
+        return dispatch => {
+            dispatch(listService.getUsersLists())
+            .then(
+                userLists => {
+                dispatch(alertActions.success('Users lists retrieved'))
+                },
+                error => {
+                    dispatch(alertActions.error(error));
+                }
+            )
+
+        }
+    } 
 

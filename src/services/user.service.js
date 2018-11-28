@@ -68,24 +68,14 @@ function register(user) {
   return fetch(`/users/register`, requestOptions).then(handleResponse);
 }
 
-function update(user) {
-  const requestOptions = {
-    method: "PUT",
-    headers: { ...authHeader(), "Content-Type": "application/json" },
-    body: JSON.stringify(user)
-  };
-
-  return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);
-}
-
-// // prefixed function name with underscore because delete is a reserved word in javascript
-// function _delete(id) {
+// function update(user) {
 //   const requestOptions = {
-//     method: "DELETE",
-//     headers: authHeader()
+//     method: "PUT",
+//     headers: { ...authHeader(), "Content-Type": "application/json" },
+//     body: JSON.stringify(user)
 //   };
 
-//   return fetch(`/users/${id}`, requestOptions).then(handleResponse);
+//   return fetch(`/users/${user.id}`, requestOptions).then(handleResponse);
 // }
 
 function handleResponse(response) {

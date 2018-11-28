@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
+import { UserListContainer } from './UserListContainer';
 
 
 class ProfilePage extends Component {
@@ -9,7 +10,8 @@ class ProfilePage extends Component {
   render() {
     return (
       <div>
-            {this.props.authentication.loggedIn ? <p> You are logged in </p> : <p> You are not logged in </p>}
+            {this.props.authentication.loggedIn ? <p> You are now logged in</p> : <p> You are not logged in </p>}
+            <UserListContainer user={this.props.authentication.user}/>
       </div>
     )
   }
@@ -18,7 +20,6 @@ class ProfilePage extends Component {
 const mapStateToProps = (state) => {
     return { 
       authentication: state.authentication
-
     };
 };
 
