@@ -19,7 +19,7 @@ export default class HomeContainer extends Component {
               <img src={photo} alt="Big Ben" />
             </div>
           </div>
-            <SearchContainer />
+          <SearchContainer />
         </section>
       </div>;
   }

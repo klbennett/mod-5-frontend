@@ -12,7 +12,7 @@ export default class FullTextModal extends Component {
           <header className="modal-card-head">
                 <p className="modal-card-title">
                 { this.props.speaker && this.props.speaker.name } -
-                { this.props.speaker.constituency && this.props.speaker.constituency}
+                { this.props.speaker && this.props.speaker.constituency}
                 <br/>
                 </p>
           </header>

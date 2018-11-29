@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 
 
 class LogInContainer extends Component {
+
   render() {
     return (
     <div className="container">
@@ -13,7 +14,6 @@ class LogInContainer extends Component {
         <LogInForm />
           {this.props.authentication.user && <Redirect push
             to='/' />}
-
       </div>
     </div>
     )

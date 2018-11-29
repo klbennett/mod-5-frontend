@@ -3,6 +3,7 @@ import FullTextModal from './FullTextModal'
 import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
 import { listActions } from "../actions";
+import { contactInfoActions } from "../actions";
 import Notifications, { notify } from "react-notify-toast";
 
 class SearchResult extends Component {
@@ -33,6 +34,15 @@ class SearchResult extends Component {
   closeModal = () => {
     this.setState({ showModal: !this.state.showModal });
   };
+
+
+  getContactInfo = () => {
+    let { result } = this.props;
+    let speakerId = result.speaker.person_id
+    console.log(speakerId)
+    this.props.getContactInfo(speakerId)
+    console.log(contactInfoActions.getContactInfo(speakerId));
+  }
 
   saveToList = () => {
     //dispatch action to add result to List
@@ -76,7 +86,7 @@ class SearchResult extends Component {
 
   render() {
     const { result } = this.props;
-    const { openModal, closeModal, saveToList } = this;
+    const { openModal, closeModal, saveToList, getContactInfo } = this;
     return <>
         <div className="card">
           <header className="card-header">
@@ -140,6 +150,13 @@ class SearchResult extends Component {
                 </button>
               </div>
 
+            <div className="column">
+              <button className="button is-dark" onClick={() => getContactInfo()}>
+                View contact information
+                </button>
+            </div>
+
+
               <div className="column">
                 <button className="button is-link" onClick={() => {
                     navigator.clipboard.writeText(this.removeHTMLfromFullText());
@@ -167,7 +184,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => ({
   saveSearchResultToList: (listItemDetails, listid) => dispatch(listActions.addToList(listItemDetails, listid)),
-   usersLists: () => dispatch(listActions.getUsersLists())
+  usersLists: () => dispatch(listActions.getUsersLists()),
+  getContactInfo: (speakerId) => dispatch(contactInfoActions.getContactInfo(speakerId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResult);

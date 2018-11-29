@@ -14,21 +14,15 @@ export const hansardActions = {
 };
 
 function fetchHansardBegin() {
-    return {
-        type: hansardConstants.BEGIN
-    };
+    return { type: hansardConstants.BEGIN };
 }
 
 function fetchHansardSuccess(payload) {
-    return {
-        type: hansardConstants.SUCCESS, payload
-    }
+    return { type: hansardConstants.SUCCESS, payload }
 };
 
 function saveSearchTerm(payload) {
-    return {
-        type: hansardConstants.SEARCH_TERM, payload
-    };
+    return { type: hansardConstants.SEARCH_TERM, payload };
 };
 
 function fetchHansardError(error) {

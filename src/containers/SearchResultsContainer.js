@@ -16,7 +16,9 @@ class SearchResultsContainer extends Component {
 
   render() {
    
-    return <div className="container is-fluid">
+    return(
+    <div className="column">
+      <div className="container is-fluid">
         <div className="notification">
           {this.props.searchTerm && <h1>
               Your results for <b> "{this.props.searchTerm}" </b>.
@@ -32,7 +34,9 @@ class SearchResultsContainer extends Component {
                 />
               )) : <h1> Sorry, no results were found for that query. </h1>}
         </div>
-      </div>;
+      </div>
+    </div>
+    )
   }
 }
 
