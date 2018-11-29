@@ -42,7 +42,7 @@ function fetchHansard(searchTerm) {
     return dispatch => {
         dispatch(fetchHansardBegin());
         dispatch(saveSearchTerm(searchTerm));
-        return fetch(`https://www.theyworkforyou.com/api/getHansard?search=${searchTerm}&key=AoGBodDXTcTtBNwGn8AytXeB`)
+        return fetch(`https://www.theyworkforyou.com/api/getHansard?search=${searchTerm}&key=AoGBodDXTcTtBNwGn8AytXeB&num=100`)
           .then(handleErrors)
           .then(res => res.json())
           .then(json => {

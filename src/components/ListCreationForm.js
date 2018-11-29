@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from "react-redux";
 import { listActions } from "../actions";
+import Notifications, { notify } from "react-notify-toast";
 
 class ListCreationForm extends Component {
 
@@ -17,6 +18,7 @@ class ListCreationForm extends Component {
         console.log(newListTitle)
         this.props.createList(newListTitle);
         console.log(this.props.createList(newListTitle))
+        notify.show("Created list!", "success");
     }
 
 

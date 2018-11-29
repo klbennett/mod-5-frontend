@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { history } from "./helpers";
 import { alertActions } from "./actions";
+import Notifications, { notify } from 'react-notify-toast';
 
 import "bulma/css/bulma.css";
 
@@ -10,7 +11,7 @@ import "bulma/css/bulma.css";
 import Nav from "./containers/Nav";
 
 import * as action from './actions'
-import ProfilePage from './containers/ProfilePage';
+import Footer from './components/Footer';
 
 
 class App extends React.Component {
@@ -31,8 +32,10 @@ class App extends React.Component {
         <Router>
           <div>
             <Nav />
+          <Notifications />
           </div>
         </Router>
+        <Footer/>
       </>;
   }
 }

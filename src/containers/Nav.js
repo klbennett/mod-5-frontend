@@ -8,6 +8,7 @@ import HomeContainer from './HomeContainer';
 import SearchResultsContainer from './SearchResultsContainer';
 import { connect } from "react-redux";
 import { userActions } from "../actions";
+import Notifications, { notify } from 'react-notify-toast';
 
 class Nav extends Component {
 
@@ -21,7 +22,10 @@ class Nav extends Component {
                 <Link to="/">Home</Link>
               </li>
             <li>
-              { this.props.authentication.loggedIn ? <a href onClick={() => {this.props.logOutUser()}}>Log Out</a> : <Link to="/login">Login</Link> }
+              { this.props.authentication.loggedIn ? <a href onClick={() => {
+                notify.show("You are now logged out", "warning");
+                this.props.logOutUser()}
+              }>Log Out</a> : <Link to="/login">Login</Link> }
              </li>
             <li>
               { this.props.authentication.loggedIn ? <Link to="/profile">Profile</Link> : <Link to="/signup">Sign Up</Link> }
@@ -34,6 +38,7 @@ class Nav extends Component {
   <Route path="/login" component={LogInContainer} />
   <Route path="/profile" component={ProfilePage} />
   <Route path="/signup" component={SignUpContainer} />  
+  <Route path="/home" component={HomeContainer} />
   <Route exact path="/" component={HomeContainer} />
 
           {/* <Route path="/profile" component={Profile} /> */}

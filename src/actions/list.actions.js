@@ -68,6 +68,7 @@ function createList(title) {
     }
 
 function addToList(listItem, listId) {
+    // debugger
         return dispatch => {
             // dispatch(addToListRequest());
             listService.addToList(listItem, listId)

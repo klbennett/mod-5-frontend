@@ -3,73 +3,82 @@ import FullTextModal from './FullTextModal'
 import ReactDOM from 'react-dom';
 import { connect } from "react-redux";
 import { listActions } from "../actions";
+import Notifications, { notify } from "react-notify-toast";
 
 class SearchResult extends Component {
-
   constructor(props) {
     super(props);
-    this.state = {
-
-    }
+    this.state = { selectedList: null };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit = () => {
     this.props.saveSearchResultToList();
-    console.log(this.props.saveSearchResultToList())
-  }
+    console.log(this.props.saveSearchResultToList());
+  };
 
-    openModal = () => {
-        this.setState({
-          showModal: !this.state.showModal
-        })
-    }
+  selectList = list => {
+    this.setState({
+      selectedList: list
+    });
+    console.log(this.state);
+  };
 
-    closeModal = () => {
-      this.setState({ showModal: !this.state.showModal });
-    }
+  openModal = () => {
+    this.setState({
+      showModal: !this.state.showModal
+    });
+  };
 
-    saveToList = () => {
-      //dispatch action to add result to List
-      let { result } = this.props
-      console.log('save to list was clicked')
-      const listItemDetails = {
-        body: result.body,
-        extract: result.extract,
-        date: result.hdate,
-        speaker: result.speaker.name,
-        speakerParty: result.speaker.party,
-        speakerId: result.speaker.member_id,
-        speakerCons: result.speaker.constituency,
-        debate: result.parent.body
-      }
-      console.log(listItemDetails)
-      this.props.saveSearchResultToList(listItemDetails);
-    }
+  closeModal = () => {
+    this.setState({ showModal: !this.state.showModal });
+  };
 
-    removeHTMLfromExtract = (props) => {
+  saveToList = () => {
+    //dispatch action to add result to List
+    let { result } = this.props;
+    let listToSaveTo = this.state.selectedList
+    console.log(listToSaveTo);
+    const listItemDetails = {
+      body: result.body,
+      extract: result.extract,
+      date: result.hdate,
+      speaker: result.speaker.name,
+      speakerParty: result.speaker.party,
+      speakerId: result.speaker.member_id,
+      speakerCons: result.speaker.constituency,
+      debate: result.parent.body
+    };
+    console.log(listItemDetails);
+    console.log(listToSaveTo.id);
+    this.props.saveSearchResultToList(listItemDetails, listToSaveTo.id);
+    notify.show("Saved to list!", "success");
+  };
+
+  removeHTMLfromExtract = props => {
     // possibility to make the keyword bold
-      let extractBody = this.props.result.extract
-      let regex = /(<([^>]+)>)/ig
-      let result = extractBody.replace(regex, "")
-      return result;
-    }
+    let extractBody = this.props.result.extract;
+    let newText = extractBody.replace(/<\/?("[^"]*"|'[^']*'|[^>])*(>|$)/g, "");
+    let newText2 = newText.replace("&#8212", "");
+    return newText;
+  };
 
-  removeHTMLfromFullText = (props) => {
+  removeHTMLfromFullText = props => {
     // possibility to make the keyword bold
-      let fullTextBody = this.props.result.body
-      let regex = /(<([^>]+)>)/ig
-      let result = fullTextBody.replace(regex, "")
-      return result;
-    }
-
+    let searchTerm = this.props.searchTerm;
+    let fullTextBody = this.props.result.body;
+    let textObj = { cat: "&#8212", dog: "&ldquo", goat: "&rsquo;", goat: "h&mdash;" };
+    let regex = /(<([^>]+)>)/gi;
+    
+    let result = fullTextBody.replace(regex, "")
+    return result;
+  };
 
   render() {
-      const { result } = this.props
-      const { openModal, closeModal, saveToList } = this
-    return (<>
+    const { result } = this.props;
+    const { openModal, closeModal, saveToList } = this;
+    return <>
         <div className="card">
-
           <header className="card-header">
             <p className="card-header-title">
               {result.speaker ? result.speaker.name : null} - {result.parent ? result.parent.body : null}
@@ -80,40 +89,50 @@ class SearchResult extends Component {
             <div className="content">
               {this.removeHTMLfromExtract()}
               <br />
-            <i><time datetime={result.hdate}>{result.hdate} </time></i>
+              <i>
+                <time datetime={result.hdate}>{result.hdate} </time>
+              </i>
             </div>
           </div>
 
           <footer className="card-footer">
+            <div class="field is-grouped">
+              <div className="column">
+                <div className="dropdown is-hoverable">
+                  <div className="dropdown-trigger">
+                    <button className="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                      <span>Select a list</span>
+                      <span className="icon is-small">
+                        <i className="fas fa-angle-down" aria-hidden="true" />
+                      </span>
+                    </button>
+                  </div>
 
-          <div class="field is-grouped">
+                  {this.state.selectedList !== null && <button className="button is-success" onClick={() => saveToList()}>
+                  Save to {'  '}<b> {this.state.selectedList.title} </b>
+                    </button>}
 
-              <div class="column">
-              <button className="button is-success" onClick={() => saveToList()}>Save</button>
-              </div>
-
-            <div class="dropdown is-active">
-
-              <div class="dropdown-trigger">
-                <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                  <span>Dropdown button</span>
-                  <span class="icon is-small">
-                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                  </span>
-                </button>
-              </div>
-
-              {/* {this.props.users.lists && this.props.users.lists.map(list =>
-              <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                  <a class="dropdown-item">
-                    Dropdown item
-                   </a>
+                  <div className="dropdown-menu" id="dropdown-menu4" role="menu">
+                    <div className="dropdown-content">
+                      {this.props.userlist && this.props.userlist.lists.map(
+                          list => (
+                            // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                            <a
+                              className={
+                                this.state.selectedList === list
+                                  ? "dropdown-item is-active"
+                                  : "dropdown-item"
+                              }
+                              onClick={() => this.selectList(list)}
+                            >
+                              {list.title}
+                            </a>
+                          )
+                        )}
+                    </div>
+                  </div>
                 </div>
-              </div> )} */}
-
               </div>
-    
 
               <div className="column">
                 <button className="button is-primary" onClick={() => openModal()}>
@@ -123,34 +142,32 @@ class SearchResult extends Component {
 
               <div className="column">
                 <button className="button is-link" onClick={() => {
-                navigator.clipboard.writeText(this.removeHTMLfromFullText());
+                    navigator.clipboard.writeText(this.removeHTMLfromFullText());
+                    notify.show("Copied to clipboard!", "success");
                   }}>
                   Copy to Clipboard
                 </button>
               </div>
-
-            </div> 
-
+            </div>
           </footer>
-          </div>
+        </div>
 
         <FullTextModal isOpen={this.state.showModal} speaker={result.speaker} closeModal={closeModal} openModal={openModal} fullText={this.removeHTMLfromFullText()} />
-      </>
-  )
+      </>;
   }
-
 }
 
-function mapStateToProps(state) {
-  const { userLists } = state.userLists;
+const mapStateToProps = state => {
   return {
-    userLists
+    userlist: state.userlist
+
   };
-}
+};
 
 
 const mapDispatchToProps = dispatch => ({
-  saveSearchResultToList: (searchResult) => dispatch(listActions.addToList(searchResult, 1))
+  saveSearchResultToList: (listItemDetails, listid) => dispatch(listActions.addToList(listItemDetails, listid)),
+   usersLists: () => dispatch(listActions.getUsersLists())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResult);

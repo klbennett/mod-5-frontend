@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import response from '../response'
 import { hansardActions }  from "../actions";
+import { history } from "../helpers/history";
+import Notifications, { notify } from "react-notify-toast";
 
 class SearchBox extends Component {
   // Concerned with taking user input and using it as a keyword to search the api
@@ -19,7 +21,7 @@ class SearchBox extends Component {
     console.log(searchTerm)
     this.props.storeSearchResults(searchTerm);
     console.log(this.props.storeSearchResults(searchTerm))
-    
+    notify.show("Loading results...", "warning");
   }
     
 

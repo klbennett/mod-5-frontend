@@ -25,8 +25,7 @@ const initState = {
                 return {
                     ...state,
                     loading: false,
-                    error: action.payload.error,
-                    results: [] // change if I do not want to reset results
+                    error: action.payload.error
                 };
             case hansardConstants.SEARCH_TERM:
                 return {
