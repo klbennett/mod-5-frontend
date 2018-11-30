@@ -1,7 +1,7 @@
 import { contactInfoConstants } from "../constants";
+import { alertActions } from ".";
 
-const parlinfo = require("../contactinfo/contactinfo.json")
-const parlParseURL = "uk.org.publicwhip/person/"
+const parlinfo = require("../parlinfo/parlinfo.json")
 
 export const contactInfoActions = {
     getContactInfo
@@ -24,11 +24,13 @@ function getContactInfoError(error) {
 
 function getContactInfo(id) {
     return dispatch => {
-        dispatch(getContactInfoBegin());
-        console.log(parlinfo)
-        console.log(parlParseURL + id)
-        console.log(parlinfo.persons.find(person => (parlParseURL + id) === person.identifiers.identifier))
-        return parlinfo.persons.find(person => (parlParseURL + id) === person.identifiers.identifier);
+        dispatch(getContactInfoBegin())
+        let foundSpeaker = parlinfo.persons.find(x => x.identifiers.some(y => y.identifier.includes('uk.org.publicwhip/person/' + id)))
+                dispatch(getContactInfoSuccess(foundSpeaker))
+            // error => {
+            //     dispatch(alertActions.error('could not find contact information'));
+            //     dispatch(getContactInfoError(error))
+            //     }
     }
 }
             // .then(json => {

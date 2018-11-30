@@ -1,4 +1,4 @@
-import { hansardConstants } from "../constants";
+import { contactInfoConstants } from "../constants";
 
 const initState = {
     selectedPolitician: [],
@@ -9,29 +9,24 @@ const initState = {
 
 export function getContactInfo(state = initState, action) {
     switch (action.type) {
-        case hansardConstants.BEGIN:
+        case contactInfoConstants.BEGIN:
             return {
                 ...state,
                 loading: true,
                 error: null
             };
-        case hansardConstants.SUCCESS:
+        case contactInfoConstants.SUCCESS:
             return {
                 ...state,
                 loading: false,
-                results: action.payload
+                selectedPolitician: action.payload
             };
-        case hansardConstants.FAILURE:
+        case contactInfoConstants.FAILURE:
             return {
                 ...state,
                 loading: false,
                 error: action.payload.error
             };
-        case hansardConstants.SEARCH_TERM:
-            return {
-                ...state,
-                searchTerm: action.payload
-            }
         default:
             return state
     }

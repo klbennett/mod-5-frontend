@@ -1,6 +1,6 @@
 import { authHeader } from "../helpers";
 
-export const listService = { createList, getList, addToList, getUsersLists };
+export const listService = { createList, getList, addToList, getUsersLists, deleteList };
 
 const backendURL = 'http://localhost:3001/api/v1';
 
@@ -37,6 +37,18 @@ function getUsersLists() {
     };
 
     return fetch(backendURL + `/userlists`, requestOptions).then(handleResponse);
+};
+
+
+function deleteList(id) {
+    const requestOptions = {
+        method: "DELETE",
+        headers: {
+            ...authHeader(), "Content-Type": "application/json", "mode": "no-cors"
+        },
+    };
+
+    return fetch(backendURL + `/list/${id}`, requestOptions).then(handleResponse);
 };
 
 

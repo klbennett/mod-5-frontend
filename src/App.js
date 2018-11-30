@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { history } from "./helpers";
 import { alertActions } from "./actions";
 import Notifications, { notify } from 'react-notify-toast';
+import { hot } from "react-hot-loader";
 
 import "bulma/css/bulma.css";
 

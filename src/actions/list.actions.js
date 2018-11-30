@@ -9,7 +9,8 @@ export const listActions = {
     createListFailure,
     createList,
     addToList,
-    getUsersLists
+    getUsersLists,
+    deleteList
 };
 
 function createListRequest() {
@@ -115,4 +116,33 @@ function getUsersLists() {
 
     }
 } 
+
+function deleteListRequest() {
+    return { type: listConstants.DELETE_LIST_REQUEST };
+}
+
+function deleteListSuccess(payload) {
+    return { type: listConstants.DELETE_LIST_SUCCESS, payload };
+}
+
+function deleteListFailure(message) {
+    return { type: listConstants.DELETE_LIST_FAILURE, message };
+}
+
+function deleteList(list) {
+    return dispatch => {
+        dispatch(deleteListRequest());
+        listService.deleteList(list.id)
+        .then(
+            list => {
+                dispatch(deleteListSuccess(list))
+                dispatch(alertActions.success('List was deleted'))
+            },
+            error => {
+                dispatch(deleteListFailure(error));
+                dispatch(alertActions.error(error, `could not delete list ${list.id}`));
+            }
+        )
+    }
+}
 

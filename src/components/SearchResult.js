@@ -35,19 +35,28 @@ class SearchResult extends Component {
     this.setState({ showModal: !this.state.showModal });
   };
 
+  openPoliticianModal = () => {
+    this.setState({
+      showPoliticianModal: !this.state.showPoliticianModal
+    });
+  };
+
+  closePoliticianModal = () => {
+    this.setState({ showPoliticianModal: !this.state.showPolticianModal });
+  };
 
   getContactInfo = () => {
     let { result } = this.props;
-    let speakerId = result.speaker.person_id
-    console.log(speakerId)
-    this.props.getContactInfo(speakerId)
+    let speakerId = result.speaker.person_id;
+    console.log(speakerId);
+    this.props.getContactInfo(speakerId);
     console.log(contactInfoActions.getContactInfo(speakerId));
-  }
+  };
 
   saveToList = () => {
     //dispatch action to add result to List
     let { result } = this.props;
-    let listToSaveTo = this.state.selectedList
+    let listToSaveTo = this.state.selectedList;
     console.log(listToSaveTo);
     const listItemDetails = {
       body: result.body,
@@ -77,16 +86,21 @@ class SearchResult extends Component {
     // possibility to make the keyword bold
     let searchTerm = this.props.searchTerm;
     let fullTextBody = this.props.result.body;
-    let textObj = { cat: "&#8212", dog: "&ldquo", goat: "&rsquo;", goat: "h&mdash;" };
+    let textObj = {
+      cat: "&#8212",
+      dog: "&ldquo",
+      goat: "&rsquo;",
+      goat: "h&mdash;"
+    };
     let regex = /(<([^>]+)>)/gi;
-    
-    let result = fullTextBody.replace(regex, "")
+
+    let result = fullTextBody.replace(regex, "");
     return result;
   };
 
   render() {
     const { result } = this.props;
-    const { openModal, closeModal, saveToList, getContactInfo } = this;
+    const { openModal, closeModal, saveToList, getContactInfo, openPoliticianModal, closePoliticianModal } = this;
     return <>
         <div className="card">
           <header className="card-header">
@@ -119,7 +133,8 @@ class SearchResult extends Component {
                   </div>
 
                   {this.state.selectedList !== null && <button className="button is-success" onClick={() => saveToList()}>
-                  Save to {'  '}<b> {this.state.selectedList.title} </b>
+                      Save to {"  "}
+                      <b> {this.state.selectedList.title} </b>
                     </button>}
 
                   <div className="dropdown-menu" id="dropdown-menu4" role="menu">
@@ -145,20 +160,19 @@ class SearchResult extends Component {
               </div>
 
               <div className="column">
-                <button className="button is-primary" onClick={() => openModal()}>
+                <button className="button is-primary is-outlined" onClick={() => openModal()}>
                   View full text
                 </button>
               </div>
 
-            <div className="column">
-              <button className="button is-dark" onClick={() => getContactInfo()}>
-                View contact information
+              <div className="column">
+              <button className="button is-dark is-outlined" onClick={() => getContactInfo()}>
+                  View speaker info
                 </button>
-            </div>
-
+              </div>
 
               <div className="column">
-                <button className="button is-link" onClick={() => {
+              <button className="button is-link is-outlined" onClick={() => {
                     navigator.clipboard.writeText(this.removeHTMLfromFullText());
                     notify.show("Copied to clipboard!", "success");
                   }}>
@@ -170,14 +184,16 @@ class SearchResult extends Component {
         </div>
 
         <FullTextModal isOpen={this.state.showModal} speaker={result.speaker} closeModal={closeModal} openModal={openModal} fullText={this.removeHTMLfromFullText()} />
+
+        <PoliticianDetailModal isOpen={this.state.showPoliticianModal} person={this.props.selectedPolitician} closePoliticianModal={closePoliticianModal} openPoliticianModal={openPoliticianModal} />
       </>;
   }
 }
 
 const mapStateToProps = state => {
   return {
-    userlist: state.userlist
-
+    userlist: state.userlist,
+    selectedPolitician: state.selectedPolitician
   };
 };
 

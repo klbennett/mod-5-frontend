@@ -6,6 +6,7 @@ import { users } from './users.reducer';
 import { hansard } from "./hansard.reducer";
 import { alert } from './alert.reducer';
 import { userlist } from './list.reducer';
+import { getContactInfo } from "./contactinfo.reducer";
 
 
 const rootReducer = combineReducers({
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   hansard,
   registration,
   userlist,
+  getContactInfo,
   users
 });
 

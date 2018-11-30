@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import LogInContainer from './LogInContainer';
 import SignUpContainer from "./SignUpContainer";
 import SearchBox from '../components/SearchBox';
@@ -9,9 +9,15 @@ import SearchResultsContainer from './SearchResultsContainer';
 import { connect } from "react-redux";
 import { userActions } from "../actions";
 import Notifications, { notify } from 'react-notify-toast';
+import { history } from "../helpers";
 
 class Nav extends Component {
 
+  redirectAfterLogout = () => {
+    notify.show("You are now logged out", "warning");
+    this.props.logOutUser();
+    return history.push("/");
+  }
 
   render() {
     return <Router>
@@ -22,17 +28,14 @@ class Nav extends Component {
                 <Link to="/">Home</Link>
               </li>
             <li>
-              { this.props.authentication.loggedIn ? <a href onClick={() => {
-                notify.show("You are now logged out", "warning");
-                this.props.logOutUser()}
-              }>Log Out</a> : <Link to="/login">Login</Link> }
+              { this.props.authentication.loggedIn ?
+                <a href onClick={() => { this.redirectAfterLogout() }}>Log Out</a> : <Link to="/login">Login</Link> }
              </li>
             <li>
               { this.props.authentication.loggedIn ? <Link to="/profile">Profile</Link> : <Link to="/signup">Sign Up</Link> }
             </li> 
             </ul>
           </div>
-          <hr />
          
   <Route path="/results" component={SearchResultsContainer} />
   <Route path="/login" component={LogInContainer} />

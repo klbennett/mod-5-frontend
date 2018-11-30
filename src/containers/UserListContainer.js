@@ -7,7 +7,9 @@ import UserListDetail from "../components/UserListDetail";
 
 class UserListContainer extends Component {
 
-    
+    deleteList = () => {
+        this.props.deleteList()
+    }
 
     componentDidMount() {
         this.props.usersLists()
@@ -15,7 +17,7 @@ class UserListContainer extends Component {
 
     render() {
         return (
-            <UserListDetail list={this.props.list}/>
+            <UserListDetail list={this.props.list} deleteList={this.deleteList}/>
         )
     }
 }
@@ -29,7 +31,9 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    usersLists: () => dispatch(listActions.getUsersLists())
-})
+  deleteList: listid => dispatch(listActions.deleteList(listid)),
+  usersLists: () => dispatch(listActions.getUsersLists())
+});
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserListContainer);

@@ -1,6 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
 import UserListContainer from '../components/UserListDetail';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect
+} from "react-router-dom";
 import { listActions } from "../actions";
 import { authHeader } from "../helpers";
 import UserListCard from "../components/UserListCard";
@@ -25,6 +31,8 @@ class ProfilePage extends Component {
 
   render() {
     return <>
+
+    { !this.props.authentication.user && <Redirect to="/"/> }
       <h1 className="title is-3">Your profile page</h1>
     <div className="container is-fluid">
     
@@ -52,7 +60,7 @@ class ProfilePage extends Component {
 
           <div className="dropdown-menu" id="dropdown-menu4" role="menu">
             <div className="dropdown-content">
-              {this.props.userlist && this.props.userlist.lists.map(
+              { this.props.userlist && this.props.userlist.lists.map(
                 list => (
                   // eslint-disable-next-line jsx-a11y/anchor-is-valid
                   <a
