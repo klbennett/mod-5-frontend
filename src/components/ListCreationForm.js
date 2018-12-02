@@ -13,12 +13,16 @@ class ListCreationForm extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    handleSubmit = () => {
-        const newListTitle = this.state.newListTitle;
-        this.props.createList(newListTitle);
-        notify.show("Created list!", "success");
-        this.props.usersLists();
-    }
+handleSubmit = () => {
+    this.props.createList(this.state.newListTitle);
+    console.log(this.state.newListTitle)
+    notify.show("Created list!", "success");
+//     notify.show(notify.show("Could not create list. Your list title should be at least 6 characters long.", "error"))
+}
+
+  onBlur = (event) => {
+    this.setState({ newListTitle: event.target.value });
+}
 
 
   render() {
@@ -38,17 +42,10 @@ class ListCreationForm extends Component {
   }
 }
 
-const mapStateToProps = state => {
-  return {
-    userlist: state.userlist
-  };
-};
-
-
 const mapDispatchToProps = dispatch => ({
     createList: (title) => dispatch(listActions.createList(title)),
-    usersLists: () => dispatch(listActions.getUsersLists())
+    getUsersLists: () => dispatch(listActions.getUsersLists())
 });
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListCreationForm)
+export default connect(null, mapDispatchToProps)(ListCreationForm)

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from "react-redux";
-import UserListContainer from '../components/UserListDetail';
+import UserListContainer from './UserListContainer';
 import {
   BrowserRouter as Router,
   Route,
@@ -10,7 +10,7 @@ import {
 import { listActions } from "../actions";
 import { authHeader } from "../helpers";
 import UserListCard from "../components/UserListCard";
-
+import { EPetitionCard } from '../components/EPetitionCard';
 
 class ProfilePage extends Component {
 
@@ -24,6 +24,10 @@ class ProfilePage extends Component {
     });
     console.log(this.state);
   };
+
+  resetSelectedList = () => {
+    this.setState({ selectedList: []})
+  }
 
   componentDidMount() {
     this.props.usersLists();
@@ -82,13 +86,11 @@ class ProfilePage extends Component {
 
 
       </nav>
-        
-
-       
           
     </div>
-        <UserListContainer user={this.props.authentication.user} list={this.state.selectedList} />
+      <UserListContainer user={this.props.authentication.user} list={this.state.selectedList} resetSelectedList={this.resetSelectedList}/>
         {/* {(this.props.authentication.loggedIn && !this.props.userlist.lists) ? <h2 is-large> You do not have any lists saved yet.</h2> : <h2 is-large> Your saved lists </h2>} */}
+     <EPetitionCard/>
       </>
   }
 }

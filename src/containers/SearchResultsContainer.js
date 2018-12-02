@@ -10,9 +10,18 @@ import ListCreationForm from "../components/ListCreationForm";
 
 class SearchResultsContainer extends Component {
 
-  componentDidMount() {
-    this.props.usersLists()
+
+  componentWillMount() {
+    this.props.getUsersLists()
   }
+
+  cleanText = (text) => {
+    //why does only one regex work, how can i combine.
+    // ((&#[0-9])\w+)|(<\/?("[^"]*"|'[^']*'|[^>])*(>|$))
+    // let result = text.replace(/((&#[0-9])\w+)|(<\/?("[^"]*"|'[^']*'|[^>])*(>|$))/, "");
+    let result = text.replace(/((&#[0 - 9]) \w+)| (<\/?("[^"]*"|'[^']*'|[^>])*(>|$))/, "");
+    return result;
+  };
 
   render() {
    
@@ -20,19 +29,18 @@ class SearchResultsContainer extends Component {
     <div className="column">
       <div className="container is-fluid">
         <div className="notification">
-          {this.props.searchTerm && <h1>
-              Your results for <b> "{this.props.searchTerm}" </b>.
-            </h1>}
-          <ListCreationForm />
-          {this.props.results ? this.props.results
+          { this.props.searchTerm && <h1>Your results for <b> "{this.props.searchTerm}" </b></h1> }
+          <ListCreationForm userLists={this.props.userlist} />
+          { this.props.results && this.props.results
               .filter(result => result.body.length > 5)
               .map(result => (
                 <SearchResult
                   result={result}
-                  userLists={this.props.usersLists}
+                  userlist={this.props.userlist}
                   searchTerm={this.props.searchTerm}
                 />
-              )) : <h1> Sorry, no results were found for that query. </h1>}
+              )) }
+            { !this.props.results && <h1> Sorry, no results were found for that query. </h1> }
         </div>
       </div>
     </div>
@@ -45,11 +53,11 @@ const mapStateToProps = state => ({
   results: state.hansard.results,
   loading: state.hansard.loading,
   error: state.hansard.error,
-  userLists: state.userLists
+  userlist: state.userlist
 });
 
 const mapDispatchToProps = dispatch => ({
-  usersLists: () => dispatch(listActions.getUsersLists())
+  getUsersLists: () => dispatch(listActions.getUsersLists())
 });
 
 

@@ -12,10 +12,10 @@ export default class HomeContainer extends Component {
 
   render() {
     return <div>
-        <section class="hero is-dark is-fullheight-with-navbar">
-          <div class="hero-body">
-            <div class="container ">
-              <p class="title">Welcome to WhatTheySaid</p>
+        <section className="hero is-dark is-fullheight-with-navbar">
+          <div className="hero-body">
+            <div className="container ">
+            <p className="title">Welcome to WhatTheySaid</p>
               <img src={photo} alt="Big Ben" />
             </div>
           </div>

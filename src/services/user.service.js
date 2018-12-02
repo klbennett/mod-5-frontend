@@ -29,8 +29,8 @@ function login(username, password) {
       if (user.token) {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem("user", JSON.stringify(user));
+        console.log("Now logged in as" + user);
       }
-      console.log('Now logged in as' + user);
       return user;
     });
 }
@@ -46,7 +46,7 @@ function getAll() {
     headers: authHeader()
   };
 
-  return fetch(`/users`, requestOptions).then(handleResponse);
+  return fetch(backendURL + `/users`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -55,7 +55,7 @@ function getById(id) {
     headers: authHeader()
   };
 
-  return fetch(`/users/${id}`, requestOptions).then(handleResponse);
+  return fetch(backendURL + `users/${id}`, requestOptions).then(handleResponse);
 }
 
 function register(user) {
@@ -65,7 +65,7 @@ function register(user) {
     body: JSON.stringify(user)
   };
 
-  return fetch(`/users/register`, requestOptions).then(handleResponse);
+  return fetch(backendURL + `/signup`, requestOptions).then(handleResponse);
 }
 
 // function update(user) {

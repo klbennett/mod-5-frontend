@@ -12,7 +12,7 @@ class LogInContainer extends Component {
     <div className="container">
     <div className="field is-grouped is-grouped-centered">
         <LogInForm />
-          {this.props.authentication.user && <Redirect push
+          {this.props.authentication.loggedIn === true  && <Redirect push
             to='/' />}
       </div>
     </div>

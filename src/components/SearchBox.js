@@ -26,22 +26,22 @@ class SearchBox extends Component {
     
 
   render() {
-    return (
-    <div>
-
-    <div className="level-item">
-      <div className="field has-addons">
-        <p className="control">
-          <input className="input is-large" type="text" placeholder="Search" onChange={(e) => this.setState({ searchTerm: e.target.value })} />
-        </p>
-          <p className="control">
-          <button className="button is-large" type="submit" value="Submit"  onClick={this.handleSubmit}>Search</button> 
-          </p>
-      </div>
-      </div>
-
-    </div>
-    )}
+    return <div>
+        <div className="level-item">
+          <div className="field has-addons">
+            <p className="control">
+              <input className="input is-medium" type="text" placeholder="Search" onChange={e => this.setState(
+                    { searchTerm: e.target.value }
+                  )} />
+            </p>
+            <p className="control">
+              <button className="button is-medium" type="submit" value="Submit" onClick={this.handleSubmit}>
+                <i class="fas fa-search"></i>
+              </button>
+            </p>
+          </div>
+        </div>
+      </div>;}
 }
 
 const mapDispatchToProps = dispatch => ({

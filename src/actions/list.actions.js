@@ -10,7 +10,8 @@ export const listActions = {
     createList,
     addToList,
     getUsersLists,
-    deleteList
+    deleteList,
+    deleteListItem
 };
 
 function createListRequest() {
@@ -34,6 +35,7 @@ function createListFailure(message) {
 function createList(title) {
     return dispatch => {
         dispatch(createListRequest());
+        // debugger
         listService.createList(title)
             .then(
                 list => {
@@ -132,17 +134,45 @@ function deleteListFailure(message) {
 function deleteList(list) {
     return dispatch => {
         dispatch(deleteListRequest());
+        // debugger;
         listService.deleteList(list.id)
-        .then(
-            list => {
-                dispatch(deleteListSuccess(list))
+        dispatch(deleteListSuccess(list.id))
+        // .then(
+        //     list => {
+        //         dispatch(deleteListSuccess(list.id))
                 dispatch(alertActions.success('List was deleted'))
-            },
-            error => {
-                dispatch(deleteListFailure(error));
-                dispatch(alertActions.error(error, `could not delete list ${list.id}`));
-            }
-        )
+            // },
+            // error => {
+            //     dispatch(deleteListFailure(error));
+            //     dispatch(alertActions.error(error, `could not delete list ${list.id}`));
+            // }
+        // )
+    }
+}
+
+function deleteListItemRequest() {
+    return { type: listConstants.DELETE_LIST_ITEM_REQUEST };
+}
+
+function deleteListItemSuccess(payload) {
+    return { type: listConstants.DELETE_LIST_ITEM_SUCCESS, payload };
+}
+
+function deleteListItemFailure(message) {
+    return { type: listConstants.DELETE_LIST_ITEM_FAILURE, message };
+}
+
+function deleteListItem(listItem) {
+    return dispatch => {
+        dispatch(deleteListItemRequest());
+        listService.deleteListItem(listItem.id)
+        .then(list => {
+            // dispatch(deleteListItemSuccess(listItem));
+            dispatch(alertActions.success("List item was deleted"));
+          }, error => {
+            dispatch(deleteListItemFailure(error));
+            dispatch(alertActions.error(error, `could not delete list ${listItem.id}`));
+          });
     }
 }
 

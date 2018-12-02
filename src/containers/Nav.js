@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
 import LogInContainer from './LogInContainer';
 import SignUpContainer from "./SignUpContainer";
-import SearchBox from '../components/SearchBox';
 import ProfilePage from "./ProfilePage";
 import HomeContainer from './HomeContainer';
 import SearchResultsContainer from './SearchResultsContainer';
@@ -21,7 +20,7 @@ class Nav extends Component {
 
   render() {
     return <Router>
-        <div className="container">
+        <>
           <div className="tabs">
             <ul>
               <li>
@@ -45,7 +44,7 @@ class Nav extends Component {
   <Route exact path="/" component={HomeContainer} />
 
           {/* <Route path="/profile" component={Profile} /> */}
-        </div>
+        </>
       </Router>;
   }
 
