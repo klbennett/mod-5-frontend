@@ -13,7 +13,6 @@ export default class NewsHeaderTile extends React.Component {
 
 
   getArticles = () => {
-    debugger
     fetch(`https://newsapi.org/v2/top-headlines?sources=bbc-news&apiKey=${keys.NEWS_KEY}`)
       .then(res => res.json())
       .then(res => this.setState({

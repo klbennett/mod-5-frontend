@@ -42,15 +42,7 @@ export function userlist(state = initState, action) {
       case listConstants.DELETE_LIST_ITEM_REQUEST:
         return { ...state, loading: true, error: null };
       case listConstants.DELETE_LIST_ITEM_SUCCESS:
-        // const lists = state.lists
-        // const listToChangeIndex = lists.findIndex(({ id }) => id === action.payload.list_id);
-        // const list = lists[listToChangeIndex];
-        //  debugger
-        // const updatedList = { ...lists.list_items, list_items: list.list_items.filter(li => li.id !== action.payload.id) }
-        // return { ...state, loading: false, lists: [...state.lists.slice(0, listToChangeIndex), updatedList, ...state.lists.slice(listToChangeIndex + 1)]};
-        return {
-          ...state
-          }
+        return {...state, loading: false, lists: Object.assign({}, action.payload) }
       case listConstants.DELETE_LIST_ITEM_FAILURE:
         return { ...state, loading: false, error: action.error };
 

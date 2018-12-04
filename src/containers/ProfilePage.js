@@ -38,7 +38,6 @@ class ProfilePage extends Component {
     console.log(lists)
     const selectedListId = e.target.value;
     const list = lists.find(list => list.id === selectedListId)
-    // debugger
       this.setState({
         selectedList: list
       })
@@ -73,7 +72,7 @@ class ProfilePage extends Component {
               </div>
             <div className="dropdown-menu" id="dropdown-menu4" role="menu">
               <div className="dropdown-content">
-                {this.props.userlist && this.props.userlist.lists.map(
+                {this.props.userlist.lists && this.props.userlist.lists.map(
                   list => (
                     // eslint-disable-next-line jsx-a11y/anchor-is-valid
                     <a

@@ -3,6 +3,8 @@ import Notifications, { notify } from "react-notify-toast";
 
 
 export default class PoliticianDetailModal extends Component {
+
+
   render() {
 
     return <div className={this.props.isOpen === true ? "modal is-active" : "modal"}>
@@ -16,17 +18,16 @@ export default class PoliticianDetailModal extends Component {
           </header>
 
           <section className="modal-card-body">
-            <figure class="image is-128x128">
-              {this.props.person && (
-                <img
-                  className="is-rounded"
-                  src={this.props.person.image}
-                  alt={this.props.person.name}
-                />
-              )}
-            </figure>
-
             <div class="content">
+              <figure class="image is-128x128">
+                {this.props.person && (
+                  <img
+                    className="is-rounded"
+                    src={this.props.person.image}
+                    alt={this.props.person.name}
+                  />
+                )}
+              </figure>
               <ul>
                 {this.props.person.contact_details ? this.props.person.contact_details.map(
                       contactInfo => <li> {contactInfo.value}</li>

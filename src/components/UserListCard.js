@@ -4,6 +4,7 @@ import { listActions } from "../actions";
 import { connect } from "react-redux";
 import Notifications, { notify } from "react-notify-toast";
 import FullTextModal from './FullTextModal';
+import nlp from "compromise";
 
 class UserListCard extends Component {
 
@@ -22,6 +23,17 @@ class UserListCard extends Component {
     this.props.deleteListItem(listItem)
   }
 
+  nlpKeywords = () => {
+    let input = this.props.listItem.body;
+    let doc = nlp(input)
+      .topics()
+      .out('array');
+    console.log(doc);
+    const unique = doc.filter((v, i, a) => a.indexOf(v) === i);
+    return unique.map(keyword => (<span class="tag">{keyword}</span>))
+  };
+
+
 
   render() {
     return <>
@@ -36,6 +48,7 @@ class UserListCard extends Component {
           <div className="card-content">
             <h2 className="subtitle"> {this.props.listItem.debate} </h2>
             <div className="content">
+              <div class="tags"> {this.nlpKeywords()}</div>
               {this.props.listItem.extract ? this.props.listItem.extract : this.props.listItem.body}
 
               <hr />
@@ -45,19 +58,19 @@ class UserListCard extends Component {
           </div>
 
           <div class="field is-grouped">
-          <p class="control">
-            <button className="button is-dark is-outlined is-hovered" onClick={() => this.toggleFullTextModal()}>
-              View full text
-            </button>
+            <p class="control">
+              <button className="button is-dark is-outlined is-hovered" onClick={() => this.toggleFullTextModal()}>
+                View full text
+              </button>
             </p>
 
-          <p class="control">
-            <a className="button is-danger is-outlined is-hovered" onClick={() => this.deleteListItem(this.props.listItem)}>
-              <span>Delete from list</span>
-              <span class="icon is-small">
-                <i class="fas fa-times" />
-              </span>
-            </a>
+            <p class="control">
+            <a className="button is-danger is-outlined is-hovered" data-balloon-length="medium" data-balloon="Are you sure? This cannot be reversed." data-balloon-pos="up" onClick={() => this.deleteListItem(this.props.listItem)}>
+                <span>Delete from list</span>
+                <span class="icon is-small">
+                  <i class="fas fa-times" />
+                </span>
+              </a>
             </p>
           </div>
         </div>

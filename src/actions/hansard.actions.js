@@ -39,8 +39,6 @@ function fetchHansard(searchTerm, type) {
         dispatch(fetchHansardBegin());
         dispatch(saveSearchTerm(searchTerm));
         dispatch(saveSearchType(type));
-       
-        debugger
         return fetch(`https://www.theyworkforyou.com/api/getDebates?search=${searchTerm}&type=${type}&key=${keys.TWFY_KEY}&num=10`)
           .then(handleErrors)
           .then(res => res.json())

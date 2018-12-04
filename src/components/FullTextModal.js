@@ -7,27 +7,22 @@ export default class FullTextModal extends Component {
     return <div className={this.props.isOpen === true ? "modal is-active" : "modal"}>
         <div className="modal-background" />
         <div className="modal-card">
+
           <header className="modal-card-head">
             <p className="modal-card-title">
+              { this.props.speaker && this.props.speaker.name }
+          </p>
+
             <div class="field is-grouped">
-              {this.props.speaker && this.props.speaker.name}
-              <br />
-              {this.props.speaker.party && <div class="tags has-addons">
-                  {" "}
-                  <span class="tag">Party</span>
-                  <span class="tag is-primary">
-                    {this.props.speaker.party}
-                  </span>
-                </div>}
-              {this.props.speaker.constituency && <div class="tags has-addons">
-                  {" "}
-                  <span class="tag">Constituency</span>
-                  <span class="tag is-dark">
-                    {this.props.speaker.constituency}
-                  </span>
-                </div>}
+            <div class="tags has-addons">
+              { this.props.speaker.party && 
+                <><span class="tag">Party</span>
+                  <span class="tag is-primary">{this.props.speaker.party}</span></> }
+              { this.props.speaker.constituency &&
+                <><span class="tag">Constituency</span>
+                  <span class="tag is-dark">{this.props.speaker.constituency}</span></> }
             </div>
-            </p>
+            </div>
           </header>
 
           <section className="modal-card-body">

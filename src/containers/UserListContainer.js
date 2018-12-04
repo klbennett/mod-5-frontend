@@ -11,7 +11,8 @@ class UserListContainer extends Component {
 
     deleteListItem = () => {
         this.props.deleteListItem();
-        notify.show("List iten was deleted", "warning");
+        notify.show("List item was deleted", "warning");
+        this.props.resetSelectedList();
     }
 
     deleteAList = (list) => {
@@ -31,7 +32,6 @@ class UserListContainer extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        userlist: state.userlist,
         authentication: state.authentication
     }
 }

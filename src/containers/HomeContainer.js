@@ -10,7 +10,6 @@ export default class HomeContainer extends Component {
   componentDidMount() {
     notify.show("Welcome!", "success");
   }
-
   render() {
     return (
       <>

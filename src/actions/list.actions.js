@@ -133,7 +133,6 @@ function deleteListFailure(message) {
 function deleteList(list) {
     return dispatch => {
         dispatch(deleteListRequest());
-        debugger;
         listService.deleteList(list.id)
         dispatch(deleteListSuccess(list.id))
         // .then(
@@ -165,8 +164,9 @@ function deleteListItem(listItem) {
     return dispatch => {
         dispatch(deleteListItemRequest());
         listService.deleteListItem(listItem.id)
-        .then(listItem => {
-            dispatch(deleteListItemSuccess(listItem));
+        // return value of backend is now all user lists
+        .then(lists => {
+            dispatch(deleteListItemSuccess(lists))
             dispatch(alertActions.success("List item was deleted"));
           }, error => {
             dispatch(deleteListItemFailure(error));

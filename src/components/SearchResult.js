@@ -6,11 +6,11 @@ import { connect } from "react-redux";
 import { listActions } from "../actions";
 import { contactInfoActions } from "../actions";
 import Notifications, { notify } from "react-notify-toast";
+import nlp from "compromise";
 
 class SearchResult extends Component {
-
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       selectedList: null,
       showFullTextModal: false,
@@ -36,16 +36,15 @@ class SearchResult extends Component {
     });
   };
 
-  
   getContactInfo = () => {
-    let { result } = this.props
-    let speakerId = result.speaker.person_id
-    this.props.getContactInfo(speakerId)
-    console.log(contactInfoActions.getContactInfo(speakerId))
+    let { result } = this.props;
+    let speakerId = result.speaker.person_id;
+    this.props.getContactInfo(speakerId);
+    console.log(contactInfoActions.getContactInfo(speakerId));
   };
 
   togglePoliticianModal = () => {
-    this.getContactInfo()
+    this.getContactInfo();
 
     this.setState({
       showPoliticianModal: !this.state.showPoliticianModal
@@ -73,45 +72,55 @@ class SearchResult extends Component {
     notify.show("Saved to list!", "success");
   };
 
-  cleanText = (text) => {
-      let result = text.replace(/((&#[0-9])\w+)|(<\/?("[^"]*"|'[^']*'|[^>])*(>|$))/g, "");
-      return result;
-    };
+  cleanText = text => {
+    let result = text.replace(
+      /((&#[0-9])\w+)|(<\/?("[^"]*"|'[^']*'|[^>])*(>|$))/g,
+      ""
+    );
+    return result;
+  };
 
-  nlpTest = () => {
-    let nlp = window.nlp_compromise;
-    console.log(nlp)
-  }
+  nlpKeywords = () => {
+    let input = this.cleanText(this.props.result.body);
+    let doc = nlp(input)
+      .topics()
+      .out('array');
+      console.log(doc);
+    const unique = doc.filter((v, i, a) => a.indexOf(v) === i); 
+    return unique.map(keyword => (<span class="tag">{ keyword }</span>))
+  };
 
   render() {
     const { result } = this.props;
-    // const defaultPol = { birth_date: "1977-04-23", contact_details: [{ type: "email", value: "james.frith.mp@parliament.uk" }, { type: "phone", value: "0207 219 2907" }, { type: "twitter", value: "JamesFrith" }], email: "james.frith.mp@parliament.uk", family_name: "Frith", gender: "male", given_name: "James", id: "003c686d-f9a3-4b1b-92d1-d0e3c0222179", identifiers: [{ identifier: "4637", scheme: "datadotparl" }, { identifier: "106001", scheme: "dods" }, { identifier: "commons/james-frith/4637", scheme: "parliamentdotuk" }, { identifier: "uk.org.publicwhip/person/25622", scheme: "parlparse" }, { identifier: "6215", scheme: "pims" }, { identifier: "Q30163560", scheme: "wikidata" }], image: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Official_portrait_of_James_Frith_crop_2.jpg", images: [{ url: "https://upload.wikimedia.org/wikipedia/commons/9/9f/Official_portrait_of_James_Frith_crop_2.jpg" }], links: [{ note: "Wikipedia (en)", url: "https://en.wikipedia.org/wiki/James_Frith" }, { note: "facebook", url: "https://facebook.com/JamesFrithBury" }, { note: "twitter", url: "https://twitter.com/JamesFrith" }, { note: "website", url: "http://www.jamesfrith.org/" }], name: "James Frith", sort_name: "Frith, James" }
-    const { selectList, toggleFullTextModal, saveToList, togglePoliticianModal} = this;
+    const {
+      selectList,
+      toggleFullTextModal,
+      saveToList,
+      togglePoliticianModal
+    } = this;
     return <>
         <div className="box">
           <header className="card-header">
             <p className="card-header-title">
               {result.speaker ? result.speaker.name : null}
-              { result.speaker.party ? <div class="tags has-addons">
-              {" "}
+              {result.speaker ? <div class="tags has-addons">
+                  {" "}
                   <span class="tag">Party</span>
-                  <span class="tag is-primary">{ result.speaker.party }</span>
-                  </div> : null }
+                  <span class="tag is-primary">{result.speaker.party}</span>
+                </div> : null}
             </p>
           </header>
 
           <div className="card-content">
             <div className="content">
               <h2 className="subtitle is-6">
-                {" "}
-                {result.parent
-                  ? this.cleanText(result.parent.body)
-                  : null}{" "}
+              <div class="tags"> { this.nlpKeywords() }</div>
+                {result.parent ? this.cleanText(result.parent.body) : null}{" "}
               </h2>
-
               {this.cleanText(result.extract)}
               <hr />
-              <i class="far fa-calendar-alt" /><span>{result.hdate}</span>
+              <i class="far fa-calendar-alt" />
+              <span>{result.hdate}</span>
             </div>
           </div>
 
@@ -129,9 +138,10 @@ class SearchResult extends Component {
                   </div>
 
                   {this.state.selectedList !== null && <button className="button is-success" onClick={() => saveToList()}>
-                      <span> Save to <b>
-                        {this.state.selectedList.title}
-                  </b></span>
+                      <span>
+                        {" "}
+                        Save to <b>{this.state.selectedList.title}</b>
+                      </span>
                     </button>}
 
                   <div className="dropdown-menu" id="dropdown-menu4" role="menu">

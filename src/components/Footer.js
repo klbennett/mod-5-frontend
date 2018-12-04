@@ -8,7 +8,7 @@ export default class Footer extends Component {
             <p>
               <strong>WhatTheySaid</strong> by <a href="https://google.com">
                 Kay Bennett
-              </a>. Built with React, Redux, Javascript, Rails and Bulma.
+              </a>. Built with React, Redux, Javascript, Compromise, Rails and Bulma.
             </p>
           </div>
         </nav>
