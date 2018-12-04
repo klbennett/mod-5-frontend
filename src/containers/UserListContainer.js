@@ -11,12 +11,19 @@ class UserListContainer extends Component {
 
     deleteListItem = () => {
         this.props.deleteListItem();
+        notify.show("List iten was deleted", "warning");
+    }
+
+    deleteAList = (list) => {
+        this.props.deleteList(list);
         notify.show("List was deleted", "warning");
+        console.log('hi from ulc')
+        window.location.reload();
     }
 
     render() {
         return (
-            <UserListDetail list={this.props.list} deleteListItem={this.props.deleteListItem}/> 
+           <UserListDetail list={this.props.list} deleteListItem={this.props.deleteListItem} deleteAList={this.deleteAList}/> 
         )
     }
 }

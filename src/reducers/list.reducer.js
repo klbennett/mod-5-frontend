@@ -9,17 +9,19 @@ const initState = {
 
 export function userlist(state = initState, action) {
     switch (action.type) {
+//create a list
       case listConstants.CREATE_REQUEST:
         return { ...state, loading: true, error: null };
       case listConstants.CREATE_SUCCESS:
-        return { ...state, loading: false};
+        return { ...state, loading: false, lists: [...state.lists, action.payload] };
       case listConstants.CREATE_FAILURE:
         return { ...state, loading: false, error: action.payload.error }; 
-
+// add to list
       case listConstants.ADD_REQUEST:
         return { ...state, loading: true, error: null };
       case listConstants.ADD_SUCCESS:
-        return { ...state, loading: false, newLists: action.payload };
+        return { ...state, loading: false }
+          // , lists: [...state.lists].map(list => list.id === action.payload.id ? { ...list, action.payload}: list }}
       case listConstants.ADD_FAILURE:
         return { ...state, loading: false, error: action.payload.error }; 
 
@@ -40,8 +42,15 @@ export function userlist(state = initState, action) {
       case listConstants.DELETE_LIST_ITEM_REQUEST:
         return { ...state, loading: true, error: null };
       case listConstants.DELETE_LIST_ITEM_SUCCESS:
-      // debugger
-        return { ...state, loading: false};
+        // const lists = state.lists
+        // const listToChangeIndex = lists.findIndex(({ id }) => id === action.payload.list_id);
+        // const list = lists[listToChangeIndex];
+        //  debugger
+        // const updatedList = { ...lists.list_items, list_items: list.list_items.filter(li => li.id !== action.payload.id) }
+        // return { ...state, loading: false, lists: [...state.lists.slice(0, listToChangeIndex), updatedList, ...state.lists.slice(listToChangeIndex + 1)]};
+        return {
+          ...state
+          }
       case listConstants.DELETE_LIST_ITEM_FAILURE:
         return { ...state, loading: false, error: action.error };
 

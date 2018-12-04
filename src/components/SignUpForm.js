@@ -35,10 +35,6 @@ class SignUpForm extends Component {
     if (username && password) {
       dispatch(userActions.register(userObj));
     }
-    this.setState({
-        username: '',
-        password: ''
-    })
   }
 
   render() {

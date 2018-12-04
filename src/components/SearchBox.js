@@ -11,41 +11,61 @@ class SearchBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: ""
+      searchTerm: "",
+      type: "commons",
     }
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSubmit = () => {
-    const searchTerm = this.state.searchTerm;
-    console.log(searchTerm)
-    this.props.storeSearchResults(searchTerm);
-    console.log(this.props.storeSearchResults(searchTerm))
-    notify.show("Loading results...", "warning");
+      const { searchTerm, type } = this.state;
+      console.log(searchTerm)
+      this.props.storeSearchResults(searchTerm);
+      console.log(this.props.storeSearchResults(searchTerm, type))
+      notify.show("Loading results...", "warning");
+  }
+
+  onChange = (event) => {
+    this.setState({
+      type: event.target.value
+    })
   }
     
 
   render() {
-    return <div>
-        <div className="level-item">
-          <div className="field has-addons">
-            <p className="control">
-              <input className="input is-medium" type="text" placeholder="Search" onChange={e => this.setState(
-                    { searchTerm: e.target.value }
-                  )} />
-            </p>
-            <p className="control">
-              <button className="button is-medium" type="submit" value="Submit" onClick={this.handleSubmit}>
-                <i class="fas fa-search"></i>
-              </button>
-            </p>
+    return <div className="level-item">
+
+      <div className="level-item">
+          <div class="control">
+          <div class="select is-medium">
+            <select value={this.state.type} onChange={this.onChange}>
+            <option value="commons">House of Commons</option>
+            <option value="westminsterhall">Westminster Hall</option>
+            <option value="lords">House of Lords</option>
+            <option value="scotland">Scotland</option>
+            <option value="northernireland">Northern Ireland</option>
+            </select>
+            </div>
           </div>
-        </div>
-      </div>;}
+      </div>
+
+      <div className="field has-addons">
+        <p className="control">
+          <input className="input is-medium" type="text" placeholder="Search" onChange={e => this.setState(
+            { searchTerm: e.target.value }
+          )} />
+        </p>
+        <p className="control">
+          <button className="button is-medium" type="submit" value="Submit" onClick={this.handleSubmit}>
+            <i class="fas fa-search" />
+          </button>
+        </p>
+      </div>
+    </div>;}
 }
 
 const mapDispatchToProps = dispatch => ({
- storeSearchResults: (searchTerm) => dispatch(hansardActions.fetchHansard(searchTerm))
+ storeSearchResults: (searchTerm, type) => dispatch(hansardActions.fetchHansard(searchTerm, type))
 });
 
 export default connect(null, mapDispatchToProps)(SearchBox);

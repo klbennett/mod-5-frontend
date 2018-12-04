@@ -40,7 +40,6 @@ function createList(title) {
             .then(
                 list => {
                     dispatch(createListSuccess(list));
-                    history.push('/');
                     dispatch(alertActions.success('New list was created'));
                     console.log('Created new list')
                 },
@@ -134,12 +133,12 @@ function deleteListFailure(message) {
 function deleteList(list) {
     return dispatch => {
         dispatch(deleteListRequest());
-        // debugger;
+        debugger;
         listService.deleteList(list.id)
         dispatch(deleteListSuccess(list.id))
         // .then(
         //     list => {
-        //         dispatch(deleteListSuccess(list.id))
+                dispatch(deleteListSuccess(list.id))
                 dispatch(alertActions.success('List was deleted'))
             // },
             // error => {
@@ -166,8 +165,8 @@ function deleteListItem(listItem) {
     return dispatch => {
         dispatch(deleteListItemRequest());
         listService.deleteListItem(listItem.id)
-        .then(list => {
-            // dispatch(deleteListItemSuccess(listItem));
+        .then(listItem => {
+            dispatch(deleteListItemSuccess(listItem));
             dispatch(alertActions.success("List item was deleted"));
           }, error => {
             dispatch(deleteListItemFailure(error));
