@@ -2,6 +2,7 @@ import { userConstants } from '../constants';
 import { userService } from '../services';
 import { alertActions } from '.';
 import { history } from '../helpers/history';
+import Notifications, { notify } from "react-notify-toast";
 
 
 export const userActions = {
@@ -15,7 +16,6 @@ export const userActions = {
 function login(username, password) {
     return dispatch => {
         dispatch(request({ username }));
-
         userService.login(username, password)
             .then(
                 user => {
@@ -26,6 +26,7 @@ function login(username, password) {
                 error => {
                     dispatch(failure(error));
                     dispatch(alertActions.error(error));
+                    notify.show("Could not login with those credentials. Please retry", "error");
                 }
             );
     };
@@ -43,17 +44,21 @@ function logout() {
 function register(user) {
     return dispatch => {
         dispatch(request(user));
-
+        // debugger
         userService.register(user)
             .then(
                 user => {
                     dispatch(success());
                     history.push('/login');
                     dispatch(alertActions.success('Registration was successful'));
+                    notify.show("Registration was successful. Please login", "success");
+                    history.push('/login')
                 },
                 error => {
-                    dispatch(failure(error));
-                    dispatch(alertActions.error(error));
+                    dispatch(failure(error.toString()));
+                    notify.show("Could not signup with those credentials. Username may already be taken. Please retry", "error");
+                    history.push("/signup");
+                    dispatch(alertActions.error(error.toString()));
                 }
             );
     };

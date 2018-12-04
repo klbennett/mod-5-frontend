@@ -17,11 +17,11 @@ export class SearchContainer extends Component {
 
   render() {
     return (
-      <div>
+      <>
         <SearchBox/> 
         { this.props.hansard.results  && <Redirect push
           to='/results'/> }
-      </div>
+      </>
     )
   }
 }

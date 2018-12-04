@@ -10,46 +10,78 @@ import ListCreationForm from "../components/ListCreationForm";
 
 class SearchResultsContainer extends Component {
 
-  componentDidMount() {
-    this.props.usersLists()
+
+  componentWillMount() {
+    this.props.getUsersLists()
+  }
+
+  highlightSearchTerm =(text) => {
+    text.replace('<span class="hi">', "")
+    text.replace('</span', "")
+  }
+
+  cleanText = (text) => {
+    //why does only one regex work, how can i combine.
+    // ((&#[0-9])\w+)|(<\/?("[^"]*"|'[^']*'|[^>])*(>|$))
+    // let result = text.replace(/((&#[0-9])\w+)|(<\/?("[^"]*"|'[^']*'|[^>])*(>|$))/, "");
+    let result = text.replace(/((&#[0 - 9]) \w+)| (<\/?("[^"]*"|'[^']*'|[^>])*(>|$))/, "");
+    return result;
+  };
+
+  displayType = () => {
+
+  switch (this.props.type) {
+    case "commons":
+     return "House of Commons";
+    case "northernireland":
+      return "Northern Ireland Assembly";
+    case "scotland":
+      return "Scottish Parliament";
+    case "westminsterhall":
+      return "Westminster Hall";
+    default:
+      return "";
+    }
   }
 
   render() {
    
-    return(
-    <div className="column">
-      <div className="container is-fluid">
-        <div className="notification">
+    return <div className="container">
           {this.props.searchTerm && <h1>
-              Your results for <b> "{this.props.searchTerm}" </b>.
+        Your results for <b> "{this.props.searchTerm}"</b> in <b>{this.displayType()}</b> debates
             </h1>}
-          <ListCreationForm />
-          {this.props.results ? this.props.results
+          {this.props.authentication.user ? <ListCreationForm userLists={this.props.userlist} /> : <h1>
+              Log in to save your search results
+            </h1>}
+          {this.props.results && this.props.results
               .filter(result => result.body.length > 5)
               .map(result => (
                 <SearchResult
                   result={result}
-                  userLists={this.props.usersLists}
+                  userlist={this.props.userlist}
                   searchTerm={this.props.searchTerm}
                 />
-              )) : <h1> Sorry, no results were found for that query. </h1>}
-        </div>
-      </div>
-    </div>
-    )
+              ))}
+          {!this.props.results && <h1>
+              {" "}
+              Sorry, no results were found for that query.{" "}
+            </h1>}
+        </div>;
   }
 }
 
 const mapStateToProps = state => ({
   searchTerm: state.hansard.searchTerm,
+  type: state.hansard.type,
   results: state.hansard.results,
   loading: state.hansard.loading,
   error: state.hansard.error,
-  userLists: state.userLists
+  userlist: state.userlist,
+  authentication: state.authentication
 });
 
 const mapDispatchToProps = dispatch => ({
-  usersLists: () => dispatch(listActions.getUsersLists())
+  getUsersLists: () => dispatch(listActions.getUsersLists())
 });
 
 

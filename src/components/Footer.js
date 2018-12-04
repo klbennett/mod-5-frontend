@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 export default class Footer extends Component {
   render() {
-    return <div>
+    return (
         <nav class="footer is-fixed-bottom">
           <div class="content has-text-centered">
             <p>
@@ -12,6 +12,6 @@ export default class Footer extends Component {
             </p>
           </div>
         </nav>
-      </div>;
+    )
   }
 }

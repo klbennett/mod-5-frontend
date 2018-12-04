@@ -27,6 +27,7 @@ class LogInForm extends Component {
     }
 
     handleSubmit = (e) => {
+        console.log('hi')
         e.preventDefault();
         const { username, password } = this.state;
         const { dispatch } = this.props;
@@ -43,24 +44,24 @@ class LogInForm extends Component {
     }
 
     render() {
-        return (
-            <div className="container">
-                <form className="white" onSubmit={this.handleSubmit}>
-                    <h5 className="grey-text text-darken-3">Log In</h5>
-                    <div className="input-field">
-                        <label htmlFor="username">Username</label>
-                        <input type="username" id='username' onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id='password' onChange={this.handleChange} />
-                    </div>
-                    <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">Login</button>
-                    </div>
-                </form>
-            </div>
-        )
+        return <div className="container">
+            <form className="white" onSubmit={this.handleSubmit}>
+                <h1 className="title is-3">Log In</h1>
+              <div className="input-field">
+                <label htmlFor="username">Username</label>
+                <input type="username" id="username" className="input" onChange={this.handleChange} />
+              </div>
+              <div className="input-field">
+                <label htmlFor="password">Password</label>
+                    <input type="password" id="password" className="input" onChange={this.handleChange} />
+              </div>
+              <div className="input-field">
+                <button className="btn pink lighten-1 z-depth-0">
+                  Login
+                </button>
+              </div>
+            </form>
+          </div>;
     }
 }
 

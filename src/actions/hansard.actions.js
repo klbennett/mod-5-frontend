@@ -1,8 +1,6 @@
 import { hansardConstants } from "../constants";
-
-const API_ENDPOINT = './response.js'
-const MY_API_KEY = "c39a26d9c12f48dba2a5c00e35684ecc";
-const EXAMPLE_REQ = "https://www.theyworkforyou.com/api/getHansard?search=climate&key=AoGBodDXTcTtBNwGn8AytXeB";
+import { alertActions } from ".";
+import { keys } from "../env.js"
 
 
 export const hansardActions = {
@@ -25,6 +23,10 @@ function saveSearchTerm(payload) {
     return { type: hansardConstants.SEARCH_TERM, payload };
 };
 
+function saveSearchType(payload) {
+    return { type: hansardConstants.SEARCH_TYPE, payload };
+};
+
 function fetchHansardError(error) {
    return {
        type: hansardConstants.FAILURE,
@@ -32,15 +34,19 @@ function fetchHansardError(error) {
     }
 };
 
-function fetchHansard(searchTerm) {
+function fetchHansard(searchTerm, type) {
     return dispatch => {
         dispatch(fetchHansardBegin());
         dispatch(saveSearchTerm(searchTerm));
-        return fetch(`https://www.theyworkforyou.com/api/getHansard?search=${searchTerm}&key=AoGBodDXTcTtBNwGn8AytXeB&num=100`)
+        dispatch(saveSearchType(type));
+       
+        debugger
+        return fetch(`https://www.theyworkforyou.com/api/getDebates?search=${searchTerm}&type=${type}&key=${keys.TWFY_KEY}&num=10`)
           .then(handleErrors)
           .then(res => res.json())
           .then(json => {
             dispatch(fetchHansardSuccess(json.rows));
+            localStorage.setItem("results", JSON.stringify(json));
             return json.rows;
           })
           .catch(error => dispatch(fetchHansardError(error)));
