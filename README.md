@@ -1,16 +1,20 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This application provides a portal to discover and record what politicians are saying in the UK parliament, as well as the develo. 
 
-## Available Scripts
+Users can search House of Commons, Scottish Parliament, Northern Irish Assembly speeches and oral questions for keywords, browse search results, save individual search results, and create and browse lists. The application uses Compromise for natural language processes, and utilises Bulma, a CSS.  
 
-In the project directory, you can run:
+## How it works
+
+This application consumes the TheyWorkForYou API, specifically the getDebates endpoint. Contact information is sourced from the EveryPolitician database. The backend is a Rails API, while the frontend uses React and Redux.  
 
 ### `npm start`
 
 Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser. 
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+
+To view the full functionality of the app, it is recommended to ru
 
 ### `npm test`
 
