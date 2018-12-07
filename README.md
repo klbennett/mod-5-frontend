@@ -1,3 +1,5 @@
+## WhatTheySaid, a React/Redux/Rails application
+
 This application provides a portal to discover and record what politicians are saying in the House of Commons, Scottish Parliament, Northern Ireland Assembly, and Westminster Hall. 
 
 Users can search speeches and oral questions for keywords, browse search results, save individual search results, and create and browse lists. The application uses Compromise for natural language processessing with Javascript, and Bulma, a CSS framework based on flexbox. The database is Postgres.  
