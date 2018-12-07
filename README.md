@@ -1,6 +1,6 @@
-This application provides a portal to discover and record what politicians are saying in the UK parliament, as well as the develo. 
+This application provides a portal to discover and record what politicians are saying in the House of Commons, Scottish Parliament, Northern Ireland Assembly, and Westminster Hall. 
 
-Users can search House of Commons, Scottish Parliament, Northern Irish Assembly speeches and oral questions for keywords, browse search results, save individual search results, and create and browse lists. The application uses Compromise for natural language processes, and utilises Bulma, a CSS.  
+Users can search speeches and oral questions for keywords, browse search results, save individual search results, and create and browse lists. The application uses Compromise for natural language processessing with Javascript, and Bulma, a CSS framework based on flexbox. The database is Postgres.  
 
 ## How it works
 
