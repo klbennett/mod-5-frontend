@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
-import FullTextModal from './FullTextModal'
+import React, { Component } from "react";
+import FullTextModal from "./FullTextModal";
 import PoliticianDetailModal from "./PoliticianDetailModal";
-import ReactDOM from 'react-dom';
+import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { listActions } from "../actions";
 import { contactInfoActions } from "../actions";
@@ -21,7 +21,6 @@ class SearchResult extends Component {
 
   handleSubmit = () => {
     this.props.saveSearchResultToList();
-    console.log(this.props.saveSearchResultToList());
   };
 
   selectList = list => {
@@ -52,10 +51,9 @@ class SearchResult extends Component {
   };
 
   saveToList = () => {
-    //dispatch action to add result to List
+    // dispatch action to add result to List
     let { result } = this.props;
     let listToSaveTo = this.state.selectedList;
-    console.log(listToSaveTo);
     const listItemDetails = {
       body: this.cleanText(result.body),
       extract: this.cleanText(result.extract),
@@ -66,8 +64,6 @@ class SearchResult extends Component {
       speakerCons: result.speaker.constituency,
       debate: result.parent.body
     };
-    console.log(listItemDetails);
-    console.log(listToSaveTo.id);
     this.props.saveSearchResultToList(listItemDetails, listToSaveTo.id);
     notify.show("Saved to list!", "success");
   };
@@ -84,10 +80,10 @@ class SearchResult extends Component {
     let input = this.cleanText(this.props.result.body);
     let doc = nlp(input)
       .topics()
-      .out('array');
-      console.log(doc);
-    const unique = doc.filter((v, i, a) => a.indexOf(v) === i); 
-    return unique.map(keyword => (<span class="tag">{ keyword }</span>))
+      .out("array");
+    console.log(doc);
+    const unique = doc.filter((v, i, a) => a.indexOf(v) === i);
+    return unique.map(keyword => <span class="tag">{keyword}</span>);
   };
 
   render() {
@@ -98,23 +94,26 @@ class SearchResult extends Component {
       saveToList,
       togglePoliticianModal
     } = this;
-    return <>
+    return (
+      <>
         <div className="box">
           <header className="card-header">
             <p className="card-header-title">
               {result.speaker ? result.speaker.name : null}
-              {result.speaker ? <div class="tags has-addons">
+              {result.speaker ? (
+                <div class="tags has-addons">
                   {" "}
                   <span class="tag">Party</span>
                   <span class="tag is-primary">{result.speaker.party}</span>
-                </div> : null}
+                </div>
+              ) : null}
             </p>
           </header>
 
           <div className="card-content">
             <div className="content">
               <h2 className="subtitle is-6">
-              <div class="tags"> { this.nlpKeywords() }</div>
+                <div class="tags"> {this.nlpKeywords()}</div>
                 {result.parent ? this.cleanText(result.parent.body) : null}{" "}
               </h2>
               {this.cleanText(result.extract)}
@@ -129,7 +128,11 @@ class SearchResult extends Component {
               <div className="column">
                 <div className="dropdown is-hoverable">
                   <div className="dropdown-trigger">
-                    <button className="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+                    <button
+                      className="button"
+                      aria-haspopup="true"
+                      aria-controls="dropdown-menu4"
+                    >
                       <span>Select a list</span>
                       <span className="icon is-small">
                         <i className="fas fa-angle-down" aria-hidden="true" />
@@ -137,52 +140,71 @@ class SearchResult extends Component {
                     </button>
                   </div>
 
-                  {this.state.selectedList !== null && <button className="button is-success" onClick={() => saveToList()}>
+                  {this.state.selectedList !== null && (
+                    <button
+                      className="button is-success"
+                      onClick={() => saveToList()}
+                    >
                       <span>
                         {" "}
                         Save to <b>{this.state.selectedList.title}</b>
                       </span>
-                    </button>}
+                    </button>
+                  )}
 
-                  <div className="dropdown-menu" id="dropdown-menu4" role="menu">
+                  <div
+                    className="dropdown-menu"
+                    id="dropdown-menu4"
+                    role="menu"
+                  >
                     <div className="dropdown-content">
-                      {this.props.userlist && this.props.userlist.lists.map(
-                          list => (
-                            // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                            <a
-                              className={
-                                this.state.selectedList === list
-                                  ? "dropdown-item is-active"
-                                  : "dropdown-item"
-                              }
-                              onClick={() => selectList(list)}
-                            >
-                              {list.title}
-                            </a>
-                          )
-                        )}
+                      {this.props.userlist &&
+                        this.props.userlist.lists.map(list => (
+                          // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                          <a
+                            className={
+                              this.state.selectedList === list
+                                ? "dropdown-item is-active"
+                                : "dropdown-item"
+                            }
+                            onClick={() => selectList(list)}
+                          >
+                            {list.title}
+                          </a>
+                        ))}
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="column">
-                <button className="button is-primary is-outlined" onClick={() => toggleFullTextModal()}>
+                <button
+                  className="button is-primary is-outlined"
+                  onClick={() => toggleFullTextModal()}
+                >
                   View full text
                 </button>
               </div>
 
-              {result.speaker && result.speaker.house === "1" && <div className="column">
-                  <button className="button is-dark is-outlined" onClick={() => togglePoliticianModal()}>
+              {result.speaker && result.speaker.house === "1" && (
+                <div className="column">
+                  <button
+                    className="button is-dark is-outlined"
+                    onClick={() => togglePoliticianModal()}
+                  >
                     View speaker info
                   </button>
-                </div>}
+                </div>
+              )}
 
               <div className="column">
-                <button className="button is-link is-outlined" onClick={() => {
+                <button
+                  className="button is-link is-outlined"
+                  onClick={() => {
                     navigator.clipboard.writeText(this.cleanText(result.body));
                     notify.show("Copied to clipboard!", "success");
-                  }}>
+                  }}
+                >
                   Copy to Clipboard
                 </button>
               </div>
@@ -190,10 +212,23 @@ class SearchResult extends Component {
           </footer>
         </div>
 
-        <FullTextModal isOpen={this.state.showFullTextModal} speaker={result.speaker} toggleModal={toggleFullTextModal} fullText={this.cleanText(result.body)} />
+        <FullTextModal
+          isOpen={this.state.showFullTextModal}
+          speaker={result.speaker}
+          toggleModal={toggleFullTextModal}
+          fullText={this.cleanText(result.body)}
+        />
 
-        {result.speaker && <PoliticianDetailModal isOpen={this.state.showPoliticianModal} speaker={result.speaker} person={this.props.selectedPolitician} toggleModal={togglePoliticianModal} />}
-      </>;
+        {result.speaker && (
+          <PoliticianDetailModal
+            isOpen={this.state.showPoliticianModal}
+            speaker={result.speaker}
+            person={this.props.selectedPolitician}
+            toggleModal={togglePoliticianModal}
+          />
+        )}
+      </>
+    );
   }
 }
 
@@ -204,11 +239,12 @@ const mapStateToProps = state => {
   };
 };
 
-
 const mapDispatchToProps = dispatch => ({
-  saveSearchResultToList: (listItemDetails, listid) => dispatch(listActions.addToList(listItemDetails, listid)),
-  // usersLists: () => dispatch(listActions.getUsersLists()),
-  getContactInfo: (speakerId) => dispatch(contactInfoActions.getContactInfo(speakerId))
+  saveSearchResultToList: (listItemDetails, listid) =>
+    dispatch(listActions.addToList(listItemDetails, listid)),
+  usersLists: () => dispatch(listActions.getUsersLists()),
+  getContactInfo: speakerId =>
+    dispatch(contactInfoActions.getContactInfo(speakerId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchResult);
