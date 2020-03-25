@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { hansard } from "../actions";
 import { listActions } from "../actions";
 import SearchResult from "../components/SearchResult";
 import ListCreationForm from "../components/ListCreationForm";

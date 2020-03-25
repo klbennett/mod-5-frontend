@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import FullTextModal from "./FullTextModal";
 import PoliticianDetailModal from "./PoliticianDetailModal";
-import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import { listActions } from "../actions";
 import { contactInfoActions } from "../actions";
-import Notifications, { notify } from "react-notify-toast";
+import { notify } from "react-notify-toast";
 import nlp from "compromise";
 
 class SearchResult extends Component {
@@ -39,7 +38,6 @@ class SearchResult extends Component {
     let { result } = this.props;
     let speakerId = result.speaker.person_id;
     this.props.getContactInfo(speakerId);
-    console.log(contactInfoActions.getContactInfo(speakerId));
   };
 
   togglePoliticianModal = () => {
