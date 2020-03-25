@@ -5,11 +5,8 @@ import { history } from "./helpers";
 import { alertActions } from "./actions";
 import Notifications, { notify } from "react-notify-toast";
 import { hot } from "react-hot-loader";
-
 import "bulma/bulma.css";
-
 import Nav from "./containers/Nav";
-
 import * as action from "./actions";
 import Footer from "./components/Footer";
 
