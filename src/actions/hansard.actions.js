@@ -1,6 +1,8 @@
 import { hansardConstants } from "../constants";
 import { alertActions } from ".";
 
+const TWFY_KEY = process.env.REACT_APP_TWFY_KEY;
+
 export const hansardActions = {
   fetchHansardBegin,
   fetchHansardSuccess,
@@ -38,7 +40,7 @@ function fetchHansard(searchTerm, type) {
     dispatch(saveSearchTerm(searchTerm));
     dispatch(saveSearchType(type));
     return fetch(
-      `https://www.theyworkforyou.com/api/getDebates?search=${searchTerm}&type=${type}&key=${process.env.TWFY_KEY}&num=10`
+      `https://www.theyworkforyou.com/api/getDebates?search=${searchTerm}&type=${type}&key=${TWFY_KEY}&num=10`
     )
       .then(handleErrors)
       .then(res => res.json())

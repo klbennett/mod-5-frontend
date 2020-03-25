@@ -9,7 +9,7 @@ export const listService = {
   deleteListItem
 };
 
-const backendURL = process.env.BACKEND_URL;
+const backendURL = process.env.REACT_APP_BACKEND_URL;
 
 function createList(title) {
   const requestOptions = {

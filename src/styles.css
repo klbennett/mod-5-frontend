@@ -11080,4 +11080,9 @@ label.panel-block:hover {
   background-color: #fafafa;
   padding: 3rem 1.5rem 6rem;
 }
+
+.has-bg-img {
+  background: url("/images/big-ben.jpg") center center;
+  background-size: cover;
+}
 /*# sourceMappingURL=bulma.css.map */

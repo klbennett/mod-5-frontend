@@ -29,6 +29,13 @@ class Nav extends Component {
               </li>
               <li>
                 {authentication.loggedIn ? (
+                  <Link to="/profile">Profile</Link>
+                ) : (
+                  <Link to="/signup">Sign Up</Link>
+                )}
+              </li>
+              <li>
+                {authentication.loggedIn ? (
                   <a
                     href
                     onClick={() => {
@@ -39,13 +46,6 @@ class Nav extends Component {
                   </a>
                 ) : (
                   <Link to="/login">Login</Link>
-                )}
-              </li>
-              <li>
-                {authentication.loggedIn ? (
-                  <Link to="/profile">Profile</Link>
-                ) : (
-                  <Link to="/signup">Sign Up</Link>
                 )}
               </li>
             </ul>

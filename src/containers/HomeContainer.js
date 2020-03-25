@@ -10,7 +10,7 @@ export default class HomeContainer extends Component {
   render() {
     return (
       <>
-        <section className="hero is-dark is-fullheight-with-navbar">
+        <section className="hero is-dark is-fullheight-with-navbar has-bg-img">
           <div className="hero-body">
             <div className="container">
               <h1 className="title">Welcome to WhatTheySaid</h1>
