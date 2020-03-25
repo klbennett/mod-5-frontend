@@ -28,9 +28,9 @@ class SearchBox extends Component {
   };
 
   updateSearchTerm = event => {
-    this.setState(prevState => ({
+    this.setState({
       searchTerm: event.target.value
-    }));
+    });
   };
 
   render() {
@@ -53,7 +53,7 @@ class SearchBox extends Component {
               className="input is-medium"
               type="text"
               placeholder="Search"
-              onChange={e => this.updateSearchTerm(e)}
+              onChange={event => this.updateSearchTerm(event)}
             />
 
             <button
