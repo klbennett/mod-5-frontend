@@ -1,6 +1,9 @@
 {
   "name": "mod-5-project-frontend",
   "version": "0.1.0",
+  "engines": {
+    "node": "13.3.0"
+  },
   "private": true,
   "dependencies": {
     "bulma": "file:bulma",
