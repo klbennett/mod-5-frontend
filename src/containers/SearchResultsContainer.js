@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { hansard } from "../actions";
 import { listActions } from "../actions";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import nlp from "compromise";
-
 import SearchResult from "../components/SearchResult";
 import ListCreationForm from "../components/ListCreationForm";
 

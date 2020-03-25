@@ -23,7 +23,6 @@ export class SearchContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("hi from mstp");
   return state;
 };
 
