@@ -2,7 +2,7 @@
   "name": "mod-5-project-frontend",
   "version": "0.1.0",
   "engines": {
-    "node": "13.3.0"
+    "node": "13.3.x"
   },
   "private": true,
   "dependencies": {
