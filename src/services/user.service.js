@@ -5,24 +5,24 @@ export const userService = {
   logout,
   register,
   getAll,
-  getById,
+  getById
   // update,
   // delete: _delete
 };
 
-const backendURL = 'http://localhost:3001/api/v1/';
+const backendURL = process.env.BACKEND_URL;
 
 function login(username, password) {
   const requestOptions = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "mode": "no-cors",
-     },
+      mode: "no-cors"
+    },
     body: JSON.stringify({ username, password })
   };
 
-  return fetch(backendURL + '/login', requestOptions)
+  return fetch(backendURL + "/login", requestOptions)
     .then(handleResponse)
     .then(user => {
       // login successful if there's a jwt token in the response
