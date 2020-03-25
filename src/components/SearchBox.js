@@ -16,15 +16,21 @@ class SearchBox extends Component {
   }
 
   handleSubmit = () => {
-    const { searchTerm } = this.state;
-    this.props.storeSearchResults(searchTerm);
+    const { searchTerm, type } = this.state;
+    this.props.storeSearchResults(searchTerm, type);
     notify.show("Loading results...", "warning");
   };
 
-  onChange = event => {
+  onTypeChange = event => {
     this.setState({
       type: event.target.value
     });
+  };
+
+  updateSearchTerm = event => {
+    this.setState(prevState => ({
+      searchTerm: event.target.value
+    }));
   };
 
   render() {
@@ -32,7 +38,7 @@ class SearchBox extends Component {
       <div className="columns is-centered">
         <div className="column is-narrow has-text-centered">
           <div className="select is-medium">
-            <select value={this.state.type} onChange={this.onChange}>
+            <select value={this.state.type} onChange={this.onTypeChange}>
               <option value="commons">House of Commons</option>
               <option value="westminsterhall">Westminster Hall</option>
               <option value="lords">House of Lords</option>
@@ -47,7 +53,7 @@ class SearchBox extends Component {
               className="input is-medium"
               type="text"
               placeholder="Search"
-              onChange={e => this.setState({ searchTerm: e.target.value })}
+              onChange={e => this.updateSearchTerm(e)}
             />
 
             <button
