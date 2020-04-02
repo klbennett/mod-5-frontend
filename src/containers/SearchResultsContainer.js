@@ -10,13 +10,13 @@ class SearchResultsContainer extends Component {
   }
 
   highlightSearchTerm = text => {
-    text.replace('<span class="hi">', "");
-    text.replace("</span>", "");
+    text.replace("<strong>", "");
+    text.replace("</strong>", "");
   };
 
   cleanText = text => {
     let result = text.replace(
-      /((&#[0 - 9]) \w+)| (<\/?("[^"]*"|'[^']*'|[^>])*(>|$))/,
+      /((&#[0-9])\w+)|(<\/?("[^"]*"|'[^']*'|[^>])*(>|$))/g,
       ""
     );
     return result;
@@ -62,6 +62,8 @@ class SearchResultsContainer extends Component {
                   result={result}
                   userlist={this.props.userlist}
                   searchTerm={this.props.searchTerm}
+                  highlightSearchTerm={this.highlightSearchTerm}
+                  cleanText={this.cleanText}
                   // loggedIn={this.state.authentication.user}
                 />
               ))}

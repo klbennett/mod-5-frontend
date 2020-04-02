@@ -99,7 +99,11 @@ class ProfilePage extends Component {
           list={this.state.selectedList}
           resetSelectedList={this.resetSelectedList}
         />
-        {/* {(this.props.authentication.loggedIn && !this.props.userlist.lists) ? <h2 is-large> You do not have any lists saved yet.</h2> : <h2 is-large> Your saved lists </h2>} */}
+        {/* {this.props.authentication.loggedIn && !this.props.userlist.lists ? (
+          <h2 is-large> You do not have any lists saved yet.</h2>
+        ) : (
+          <h2 is-large> Your saved lists </h2>
+        )} */}
       </>
     );
   }
@@ -116,7 +120,4 @@ const mapDispatchToProps = dispatch => ({
   usersLists: () => dispatch(listActions.getUsersLists())
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProfilePage);
+export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);

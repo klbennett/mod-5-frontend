@@ -10,6 +10,7 @@
     "bulma": "^0.8.1",
     "bulma-modal-fx": "^1.1.1",
     "compromise": "^11.14.3",
+    "eslint-config-airbnb": "^18.1.0",
     "history": "^4.10.1",
     "marquee3000": "^1.1.1",
     "node-sass": "^4.13.1",
