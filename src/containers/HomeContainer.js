@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import photo from "../images/big-ben.jpg";
 import SearchContainer from "./SearchContainer";
-import Notifications, { notify } from "react-notify-toast";
+import { notify } from "react-notify-toast";
 
 export default class HomeContainer extends Component {
   componentDidMount() {

@@ -1,29 +1,27 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import LogInForm from "../components/LogInForm";
-import { BrowserRouter as Router, Route, Link, Redirect } from "react-router-dom";
+import { BrowserRouter as Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
-
-
 class LogInContainer extends Component {
-
   render() {
     return (
-    <div className="container">
-    <div className="field is-grouped is-grouped-centered">
-        <LogInForm />
-          {this.props.authentication.loggedIn === true  && <Redirect push
-            to='/' />}
+      <div className="container">
+        <div className="field is-grouped is-grouped-centered">
+          <LogInForm />
+          {this.props.authentication.loggedIn === true && (
+            <Redirect push to="/" />
+          )}
+        </div>
       </div>
-    </div>
-    )
+    );
   }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     authentication: state.authentication
-  }
-}
+  };
+};
 
-export default connect(mapStateToProps)(LogInContainer)
+export default connect(mapStateToProps)(LogInContainer);

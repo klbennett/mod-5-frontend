@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { listActions } from "../actions";
 import SearchResult from "../components/SearchResult";
 import ListCreationForm from "../components/ListCreationForm";
+import nlp from "compromise";
 
 class SearchResultsContainer extends Component {
   componentWillMount() {
@@ -20,6 +21,15 @@ class SearchResultsContainer extends Component {
       ""
     );
     return result;
+  };
+
+  nlpKeywords = text => {
+    let input = this.cleanText(text);
+    let doc = nlp(input)
+      .topics()
+      .out("array");
+    const unique = doc.filter((v, i, a) => a.indexOf(v) === i);
+    return unique.map(keyword => <span class="tag">{keyword}</span>);
   };
 
   displayType = () => {
@@ -64,11 +74,15 @@ class SearchResultsContainer extends Component {
                   searchTerm={this.props.searchTerm}
                   highlightSearchTerm={this.highlightSearchTerm}
                   cleanText={this.cleanText}
+                  nlpKeywords={this.nlpKeywords}
                   // loggedIn={this.state.authentication.user}
                 />
               ))}
           {!this.props.results && (
-            <h1> Sorry, no results were found for that query. </h1>
+            <h1 className="title is-4">
+              Sorry, no results were found for that query.{" "}
+              <a href="/">New search?</a>
+            </h1>
           )}
         </div>
       </>

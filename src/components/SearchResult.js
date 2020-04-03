@@ -69,15 +69,6 @@ class SearchResult extends Component {
     notify.show("Saved to list!", "success");
   };
 
-  nlpKeywords = () => {
-    let input = this.props.cleanText(this.props.result.body);
-    let doc = nlp(input)
-      .topics()
-      .out("array");
-    const unique = doc.filter((v, i, a) => a.indexOf(v) === i);
-    return unique.map(keyword => <span class="tag">{keyword}</span>);
-  };
-
   render() {
     const { result, cleanText, userlist } = this.props;
     const { selectedList } = this.state;
@@ -106,7 +97,7 @@ class SearchResult extends Component {
           <div className="card-content">
             <div className="content">
               <h2 className="subtitle is-6">
-                <div class="tags"> {this.nlpKeywords()}</div>
+                <div class="tags"> {this.props.nlpKeywords(result.body)}</div>
                 {result.parent ? cleanText(result.parent.body) : null}{" "}
               </h2>
               {cleanText(result.extract)}

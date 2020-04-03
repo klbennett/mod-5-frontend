@@ -34,27 +34,25 @@ class ProfilePage extends Component {
 
   onChange = e => {
     const { lists } = this.props.userlist;
-    console.log(lists);
     const selectedListId = e.target.value;
     const list = lists.find(list => list.id === selectedListId);
     this.setState({
       selectedList: list
     });
-    console.log(selectedListId);
-    console.log(this.state.selectedList);
   };
 
   render() {
+    const { authentication, userlist } = this.props;
     return (
       <>
-        {!this.props.authentication.user && <Redirect to="/" />}
+        {!authentication.user && <Redirect to="/" />}
         <h1 className="title is-3">Your profile page</h1>
         <div className="container is-fluid">
           <nav class="level">
             <div class="level-item has-text-centered">
               <div>
                 <p class="heading">Saved lists</p>
-                <p class="title"> {this.props.userlist.lists.length} </p>
+                <p class="title"> {userlist.lists.length} </p>
               </div>
             </div>
 
@@ -74,8 +72,8 @@ class ProfilePage extends Component {
                 </div>
                 <div className="dropdown-menu" id="dropdown-menu4" role="menu">
                   <div className="dropdown-content">
-                    {this.props.userlist.lists &&
-                      this.props.userlist.lists.map(list => (
+                    {userlist.lists &&
+                      userlist.lists.map(list => (
                         // eslint-disable-next-line jsx-a11y/anchor-is-valid
                         <a
                           className={
@@ -95,11 +93,11 @@ class ProfilePage extends Component {
           </nav>
         </div>
         <UserListContainer
-          user={this.props.authentication.user}
+          user={authentication.user}
           list={this.state.selectedList}
           resetSelectedList={this.resetSelectedList}
         />
-        {/* {this.props.authentication.loggedIn && !this.props.userlist.lists ? (
+        {/* {authentication.loggedIn && !this.props.userlist.lists ? (
           <h2 is-large> You do not have any lists saved yet.</h2>
         ) : (
           <h2 is-large> Your saved lists </h2>
