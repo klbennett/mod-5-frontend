@@ -17,6 +17,3 @@ This application consumes the TheyWorkForYou API, specifically the getDebates en
 * Users can create a list and save search results to their profile
 * Search results are auto tagged with keywords for ease of browsing
 
-## TO-DO
-Improve profile and list view page
-Fix contact information for 2019 parliament
