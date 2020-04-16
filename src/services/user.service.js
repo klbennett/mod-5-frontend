@@ -5,7 +5,7 @@ export const userService = {
   logout,
   register,
   getAll,
-  getById
+  getById,
   // update,
   // delete: _delete
 };
@@ -17,19 +17,19 @@ function login(username, password) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      mode: "no-cors"
+      mode: "no-cors",
     },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ username, password }),
   };
 
   return fetch(backendURL + "/login", requestOptions)
     .then(handleResponse)
-    .then(user => {
+    .then((user) => {
       // login successful if there's a jwt token in the response
       if (user.token) {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         localStorage.setItem("user", JSON.stringify(user));
-        console.log("Now logged in as" + user);
+        console.log("Now logged in as" + user.username);
       }
       return user;
     });
@@ -43,7 +43,7 @@ function logout() {
 function getAll() {
   const requestOptions = {
     method: "GET",
-    headers: authHeader()
+    headers: authHeader(),
   };
 
   return fetch(backendURL + `/users`, requestOptions).then(handleResponse);
@@ -52,7 +52,7 @@ function getAll() {
 function getById(id) {
   const requestOptions = {
     method: "GET",
-    headers: authHeader()
+    headers: authHeader(),
   };
 
   return fetch(backendURL + `users/${id}`, requestOptions).then(handleResponse);
@@ -62,7 +62,7 @@ function register(user) {
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(user)
+    body: JSON.stringify(user),
   };
 
   return fetch(backendURL + `/signup`, requestOptions).then(handleResponse);
@@ -79,7 +79,7 @@ function register(user) {
 // }
 
 function handleResponse(response) {
-  return response.text().then(text => {
+  return response.text().then((text) => {
     const data = text && JSON.parse(text);
     if (!response.ok) {
       if (response.status === 401) {

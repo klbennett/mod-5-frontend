@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Route,
   Link,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import { listActions } from "../actions";
 import { authHeader } from "../helpers";
@@ -14,12 +14,12 @@ import Notifications, { notify } from "react-notify-toast";
 
 class ProfilePage extends Component {
   state = {
-    selectedList: []
+    selectedList: [],
   };
 
-  selectList = list => {
+  selectList = (list) => {
     this.setState({
-      selectedList: list
+      selectedList: list,
     });
     console.log(this.state);
   };
@@ -32,12 +32,12 @@ class ProfilePage extends Component {
     this.props.usersLists();
   }
 
-  onChange = e => {
+  onChange = (e) => {
     const { lists } = this.props.userlist;
     const selectedListId = e.target.value;
-    const list = lists.find(list => list.id === selectedListId);
+    const list = lists.find((list) => list.id === selectedListId);
     this.setState({
-      selectedList: list
+      selectedList: list,
     });
   };
 
@@ -73,7 +73,7 @@ class ProfilePage extends Component {
                 <div className="dropdown-menu" id="dropdown-menu4" role="menu">
                   <div className="dropdown-content">
                     {userlist.lists &&
-                      userlist.lists.map(list => (
+                      userlist.lists.map((list) => (
                         // eslint-disable-next-line jsx-a11y/anchor-is-valid
                         <a
                           className={
@@ -97,25 +97,28 @@ class ProfilePage extends Component {
           list={this.state.selectedList}
           resetSelectedList={this.resetSelectedList}
         />
-        {/* {authentication.loggedIn && !this.props.userlist.lists ? (
+        {authentication.loggedIn && !userlist.lists ? (
           <h2 is-large> You do not have any lists saved yet.</h2>
         ) : (
           <h2 is-large> Your saved lists </h2>
-        )} */}
+        )}
       </>
     );
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     userlist: state.userlist,
-    authentication: state.authentication
+    authentication: state.authentication,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  usersLists: () => dispatch(listActions.getUsersLists())
+const mapDispatchToProps = (dispatch) => ({
+  usersLists: () => dispatch(listActions.getUsersLists()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProfilePage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ProfilePage);

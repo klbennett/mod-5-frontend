@@ -7,7 +7,7 @@ class ListCreationForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newListTitle: ""
+      newListTitle: "",
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -20,10 +20,9 @@ class ListCreationForm extends Component {
   handleSubmit = () => {
     if (this.state.newListTitle.length >= 5) {
       this.props.createList(this.state.newListTitle);
-      console.log(this.state.newListTitle);
       notify.show("Created list!", "success");
       this.setState({
-        newListTitle: ""
+        newListTitle: "",
       });
     }
     notify.show(
@@ -59,9 +58,12 @@ class ListCreationForm extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  createList: title => dispatch(listActions.createList(title)),
-  getUsersLists: () => dispatch(listActions.getUsersLists())
+const mapDispatchToProps = (dispatch) => ({
+  createList: (title) => dispatch(listActions.createList(title)),
+  getUsersLists: () => dispatch(listActions.getUsersLists()),
 });
 
-export default connect(null, mapDispatchToProps)(ListCreationForm);
+export default connect(
+  null,
+  mapDispatchToProps
+)(ListCreationForm);

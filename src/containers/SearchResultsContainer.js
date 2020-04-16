@@ -6,16 +6,16 @@ import ListCreationForm from "../components/ListCreationForm";
 import nlp from "compromise";
 
 class SearchResultsContainer extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.getUsersLists();
   }
 
-  highlightSearchTerm = text => {
+  highlightSearchTerm = (text) => {
     text.replace("<strong>", "");
     text.replace("</strong>", "");
   };
 
-  cleanText = text => {
+  cleanText = (text) => {
     let result = text.replace(
       /((&#[0-9])\w+)|(<\/?("[^"]*"|'[^']*'|[^>])*(>|$))/g,
       ""
@@ -23,13 +23,13 @@ class SearchResultsContainer extends Component {
     return result;
   };
 
-  nlpKeywords = text => {
+  nlpKeywords = (text) => {
     let input = this.cleanText(text);
     let doc = nlp(input)
       .topics()
       .out("array");
     const unique = doc.filter((v, i, a) => a.indexOf(v) === i);
-    return unique.map(keyword => <span class="tag">{keyword}</span>);
+    return unique.map((keyword) => <span class="tag">{keyword}</span>);
   };
 
   displayType = () => {
@@ -66,8 +66,8 @@ class SearchResultsContainer extends Component {
           </div>
           {this.props.results &&
             this.props.results
-              .filter(result => result.body.length > 5)
-              .map(result => (
+              .filter((result) => result.body.length > 5)
+              .map((result) => (
                 <SearchResult
                   result={result}
                   userlist={this.props.userlist}
@@ -79,7 +79,7 @@ class SearchResultsContainer extends Component {
                 />
               ))}
           {!this.props.results && (
-            <h1 className="title is-4">
+            <h1 className="title is-6">
               Sorry, no results were found for that query.{" "}
               <a href="/">New search?</a>
             </h1>
@@ -90,18 +90,18 @@ class SearchResultsContainer extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   searchTerm: state.hansard.searchTerm,
   type: state.hansard.type,
   results: state.hansard.results,
   loading: state.hansard.loading,
   error: state.hansard.error,
   userlist: state.userlist,
-  authentication: state.authentication
+  authentication: state.authentication,
 });
 
-const mapDispatchToProps = dispatch => ({
-  getUsersLists: () => dispatch(listActions.getUsersLists())
+const mapDispatchToProps = (dispatch) => ({
+  getUsersLists: () => dispatch(listActions.getUsersLists()),
 });
 
 export default connect(

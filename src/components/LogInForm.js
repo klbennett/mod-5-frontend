@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { BrowserRouter as Redirect } from "react-router-dom";
 
 import { userActions } from "../actions";
 
@@ -13,31 +14,30 @@ class LogInForm extends Component {
     this.state = {
       username: "",
       password: "",
-      submitted: false
+      submitted: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange = e => {
+  handleChange = (e) => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     const { username, password } = this.state;
-    const { dispatch } = this.props;
     this.setState({ submitted: true });
     if (username && password) {
-      dispatch(userActions.login(username, password));
+      this.props.logIn(username, password);
     }
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
-      [e.target.id]: e.target.value
+      [e.target.id]: e.target.value,
     });
   };
 
@@ -78,8 +78,16 @@ class LogInForm extends Component {
 function mapStateToProps(state) {
   const { loggingIn } = state.authentication;
   return {
-    loggingIn
+    loggingIn,
   };
 }
 
-export default connect(mapStateToProps)(LogInForm);
+const mapDispatchToProps = (dispatch) => ({
+  logIn: (username, password) =>
+    dispatch(userActions.login(username, password)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LogInForm);

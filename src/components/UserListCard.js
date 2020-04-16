@@ -82,7 +82,7 @@ class UserListCard extends Component {
                 data-balloon-length="medium"
                 data-balloon="Are you sure? This cannot be reversed."
                 data-balloon-pos="up"
-                onClick={() => this.deleteListItem(this.props.listItem)}
+                onClick={() => this.props.deleteListItem(this.props.listItem)}
               >
                 <span>Delete from list</span>
                 <span class="icon is-small">
@@ -97,8 +97,4 @@ class UserListCard extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  deleteListItem: listItem => dispatch(listActions.deleteListItem(listItem))
-});
-
-export default connect(null, mapDispatchToProps)(UserListCard);
+export default connect(null, null)(UserListCard);

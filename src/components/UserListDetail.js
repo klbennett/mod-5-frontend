@@ -7,6 +7,10 @@ import Notifications, { notify } from "react-notify-toast";
 
 // export default
 class UserListDetail extends Component {
+  deleteListItem = (listItem) => {
+    this.deleteListItem(listItem);
+  };
+
   render() {
     return (
       <>
@@ -30,15 +34,15 @@ class UserListDetail extends Component {
             )}
           </div>
           <div className="container is-fluid">
-            {this.props.list.list_items ? (
-              this.props.list.list_items.map(li => (
-                <UserListCard listItem={li} key={li.id} />
-              ))
-            ) : (
-              <h1 className="title is-4">
-                No saved items yet. <a href="/">New search?</a>
-              </h1>
-            )}
+            {this.props.list.list_items
+              ? this.props.list.list_items.map((li) => (
+                  <UserListCard
+                    listItem={li}
+                    key={li.id}
+                    deleteListItem={this.deleteListItem(li)}
+                  />
+                ))
+              : null}
           </div>
         </div>
       </>
@@ -46,10 +50,17 @@ class UserListDetail extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    userlist: state.userlist
+    userlist: state.userlist,
   };
 };
 
-export default connect(mapStateToProps)(UserListDetail);
+const mapDispatchToProps = (dispatch) => ({
+  deleteListItem: (listItem) => dispatch(listActions.deleteListItem(listItem)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(UserListDetail);

@@ -4,10 +4,9 @@ import { connect } from "react-redux";
 import { history } from "./helpers";
 import { alertActions } from "./actions";
 import Notifications, { notify } from "react-notify-toast";
-import { hot } from "react-hot-loader";
+import { Helmet } from "react-helmet";
 import "./styles.css";
 import Nav from "./containers/Nav";
-import * as action from "./actions";
 import Footer from "./components/Footer";
 
 class App extends React.Component {
@@ -26,6 +25,14 @@ class App extends React.Component {
       <>
         <Router>
           <div>
+            <Helmet>
+              <title>What They Said</title>
+              <meta
+                name="description"
+                content="A portal for discovering and recording what politicians are saying about the issues that matter to you."
+              />
+              <meta name="theme-color" content="#008f68" />
+            </Helmet>
             <Nav />
             <Notifications />
           </div>
@@ -39,7 +46,7 @@ class App extends React.Component {
 function mapStateToProps(state) {
   const { alert } = state;
   return {
-    alert
+    alert,
   };
 }
 
