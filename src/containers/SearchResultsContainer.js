@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { listActions } from "../actions";
 import SearchResult from "../components/SearchResult";
 import ListCreationForm from "../components/ListCreationForm";
+
 import nlp from "compromise";
 
 class SearchResultsContainer extends Component {
@@ -52,7 +53,7 @@ class SearchResultsContainer extends Component {
       <>
         <div className="container">
           {this.props.searchTerm && (
-            <h1>
+            <h1 className="title is-6">
               Your results for <b> "{this.props.searchTerm}"</b> in{" "}
               <b>{this.displayType()}</b> debates
             </h1>

@@ -1,15 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { BrowserRouter as Redirect } from "react-router-dom";
-
 import { userActions } from "../actions";
 
 class LogInForm extends Component {
   constructor(props) {
     super(props);
-
-    // reset login status
-    // this.props.dispatch(userActions.logout());
 
     this.state = {
       username: "",

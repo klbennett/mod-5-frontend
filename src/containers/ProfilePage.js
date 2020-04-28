@@ -1,16 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import UserListContainer from "./UserListContainer";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Redirect } from "react-router-dom";
 import { listActions } from "../actions";
-import { authHeader } from "../helpers";
-import UserListCard from "../components/UserListCard";
-import Notifications, { notify } from "react-notify-toast";
+import { notify } from "react-notify-toast";
+import UserListDetail from "../components/UserListDetail";
 
 class ProfilePage extends Component {
   state = {
@@ -24,6 +17,18 @@ class ProfilePage extends Component {
     console.log(this.state);
   };
 
+  deleteAList = (list) => {
+    this.props.deleteList(list);
+    notify.show("List was deleted", "warning");
+    window.location.reload();
+  };
+
+  deleteAListItem = (li) => {
+    this.props.deleteListItem(li);
+    notify.show("List item was deleted. Refresh to see changes", "warning");
+    this.props.usersLists();
+  };
+
   resetSelectedList() {
     this.setState({ selectedList: [] });
   }
@@ -34,6 +39,8 @@ class ProfilePage extends Component {
 
   onChange = (e) => {
     const { lists } = this.props.userlist;
+    console.log("userlist:" + JSON.stringify(this.props.userlist));
+
     const selectedListId = e.target.value;
     const list = lists.find((list) => list.id === selectedListId);
     this.setState({
@@ -72,7 +79,7 @@ class ProfilePage extends Component {
                 </div>
                 <div className="dropdown-menu" id="dropdown-menu4" role="menu">
                   <div className="dropdown-content">
-                    {userlist.lists &&
+                    {userlist.lists.length > 0 &&
                       userlist.lists.map((list) => (
                         // eslint-disable-next-line jsx-a11y/anchor-is-valid
                         <a
@@ -92,15 +99,15 @@ class ProfilePage extends Component {
             </div>
           </nav>
         </div>
-        <UserListContainer
+        <UserListDetail
           user={authentication.user}
           list={this.state.selectedList}
           resetSelectedList={this.resetSelectedList}
+          deleteAListItem={this.deleteAListItem}
+          deleteAList={this.deleteAList}
         />
-        {authentication.loggedIn && !userlist.lists ? (
+        {authentication.loggedIn && !userlist.lists && (
           <h2 is-large> You do not have any lists saved yet.</h2>
-        ) : (
-          <h2 is-large> Your saved lists </h2>
         )}
       </>
     );
@@ -115,6 +122,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  deleteList: (list) => dispatch(listActions.deleteList(list)),
+  deleteListItem: (listItem) => dispatch(listActions.deleteListItem(listItem)),
   usersLists: () => dispatch(listActions.getUsersLists()),
 });
 

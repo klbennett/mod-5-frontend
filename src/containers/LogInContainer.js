@@ -1,7 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 import LogInForm from "../components/LogInForm";
-import { BrowserRouter as Redirect } from "react-router-dom";
-import { history } from "../helpers/history";
 import { connect } from "react-redux";
 
 function LogInContainer(props) {

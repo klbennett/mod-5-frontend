@@ -1,2 +1,7 @@
-@import 'bulma/bulma';
-@import 'bulma-extensions/extensions';
+@import "bulma/bulma";
+@import "bulma-extensions/extensions";
+
+.has-bg-img {
+  background: url("/images/big-ben.jpg") center center;
+  background-size: cover;
+}

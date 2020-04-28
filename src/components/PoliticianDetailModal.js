@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Notifications, { notify } from "react-notify-toast";
 
 export default class PoliticianDetailModal extends Component {
   render() {
@@ -27,7 +26,7 @@ export default class PoliticianDetailModal extends Component {
               </figure>
               <ul>
                 {this.props.person.contact_details
-                  ? this.props.person.contact_details.map(contactInfo => (
+                  ? this.props.person.contact_details.map((contactInfo) => (
                       <li> {contactInfo.value}</li>
                     ))
                   : null}

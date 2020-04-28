@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { listActions } from "../actions";
 import { contactInfoActions } from "../actions";
 import { notify } from "react-notify-toast";
-import nlp from "compromise";
 
 class SearchResult extends Component {
   constructor(props) {
@@ -13,7 +12,7 @@ class SearchResult extends Component {
     this.state = {
       selectedList: null,
       showFullTextModal: false,
-      showPoliticianModal: false
+      showPoliticianModal: false,
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -25,13 +24,13 @@ class SearchResult extends Component {
 
   handleChange(event) {
     this.setState({
-      selectedList: JSON.parse(event.target.value)
+      selectedList: JSON.parse(event.target.value),
     });
   }
 
   toggleFullTextModal = () => {
     this.setState({
-      showFullTextModal: !this.state.showFullTextModal
+      showFullTextModal: !this.state.showFullTextModal,
     });
   };
 
@@ -45,7 +44,7 @@ class SearchResult extends Component {
     // this.getContactInfo();
 
     this.setState({
-      showPoliticianModal: !this.state.showPoliticianModal
+      showPoliticianModal: !this.state.showPoliticianModal,
     });
   };
 
@@ -61,7 +60,7 @@ class SearchResult extends Component {
       speakerParty: result.speaker.party,
       speakerId: result.speaker.member_id,
       speakerCons: result.speaker.constituency,
-      debate: result.parent.body
+      debate: result.parent.body,
     };
     console.log(this.state.selectedList);
     console.log(listToSaveTo.id);
@@ -76,7 +75,7 @@ class SearchResult extends Component {
       handleChange,
       toggleFullTextModal,
       saveToList,
-      togglePoliticianModal
+      togglePoliticianModal,
     } = this;
     return (
       <>
@@ -84,7 +83,7 @@ class SearchResult extends Component {
           <header className="card-header">
             <p className="card-header-title">
               {result.speaker ? result.speaker.name : null}
-              {result.speaker.party ? (
+              {result.speaker && result.speaker.party ? (
                 <div class="tags has-addons">
                   {" "}
                   <span class="tag">Party</span>
@@ -114,7 +113,7 @@ class SearchResult extends Component {
                   <div class="select">
                     <select value={selectedList} onChange={handleChange}>
                       <option value="">Select a list</option>
-                      {userlist.lists.map(list => (
+                      {userlist.lists.map((list) => (
                         <option value={JSON.stringify(list)}>
                           {list.title}
                         </option>
@@ -139,7 +138,7 @@ class SearchResult extends Component {
                     role="menu"
                   >
                     {this.props.userlist &&
-                      this.props.userlist.lists.map(list => (
+                      this.props.userlist.lists.map((list) => (
                         // eslint-disable-next-line jsx-a11y/anchor-is-valid
 
                         <p>{list.title}</p>
@@ -202,19 +201,20 @@ class SearchResult extends Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
-    // userlist: state.userlist,
-    selectedPolitician: state.getContactInfo.selectedPolitician
+    selectedPolitician: state.getContactInfo.selectedPolitician,
   };
 };
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   saveSearchResultToList: (listItemDetails, listid) =>
     dispatch(listActions.addToList(listItemDetails, listid)),
-  // usersLists: () => dispatch(listActions.getUsersLists()),
-  getContactInfo: speakerId =>
-    dispatch(contactInfoActions.getContactInfo(speakerId))
+  getContactInfo: (speakerId) =>
+    dispatch(contactInfoActions.getContactInfo(speakerId)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchResult);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchResult);

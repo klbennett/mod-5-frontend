@@ -1,25 +1,18 @@
 import React, { Component } from "react";
-import UserListDetail from "./UserListDetail";
-import { listActions } from "../actions";
 import { connect } from "react-redux";
-import Notifications, { notify } from "react-notify-toast";
 import FullTextModal from "./FullTextModal";
 import nlp from "compromise";
 
 class UserListCard extends Component {
   state = {
-    showFullTextModal: false
+    showFullTextModal: false,
   };
 
   toggleFullTextModal = () => {
     this.setState({
-      showFullTextModal: !this.state.showFullTextModal
+      showFullTextModal: !this.state.showFullTextModal,
     });
     console.log(this.state);
-  };
-
-  deleteListItem = listItem => {
-    this.props.deleteListItem(listItem);
   };
 
   nlpKeywords = () => {
@@ -28,7 +21,11 @@ class UserListCard extends Component {
       .topics()
       .out("array");
     const unique = doc.filter((v, i, a) => a.indexOf(v) === i);
-    return unique.map(keyword => <span class="tag">{keyword}</span>);
+    return unique.map((keyword) => (
+      <span class="tag" key={keyword}>
+        {keyword}
+      </span>
+    ));
   };
 
   render() {
@@ -36,13 +33,17 @@ class UserListCard extends Component {
       <>
         <div className="box">
           <header className="card-header">
+            <p className="card-header-title">{this.props.listItem.speaker}</p>
             <p className="card-header-title">
-              {this.props.listItem.speaker} ({this.props.listItem.speakerParty}{" "}
-              -
-              {this.props.listItem.speakerCons
-                ? this.props.listItem.speakerCons
-                : " House of Lords"}
-              )
+              {this.props.listItem.speakerParty ? (
+                <div class="tags has-addons">
+                  {" "}
+                  <span class="tag">Party</span>
+                  <span class="tag is-primary">
+                    {this.props.listItem.speakerParty}
+                  </span>
+                </div>
+              ) : null}
             </p>
 
             <FullTextModal
@@ -97,4 +98,7 @@ class UserListCard extends Component {
   }
 }
 
-export default connect(null, null)(UserListCard);
+export default connect(
+  null,
+  null
+)(UserListCard);

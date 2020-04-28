@@ -1,14 +1,13 @@
 import React, { Component } from "react";
-import { listActions } from "../actions";
 import { connect } from "react-redux";
-import ReactDOM, { render } from "react-dom";
-import UserListCard from "./UserListCard";
-import Notifications, { notify } from "react-notify-toast";
+import { listActions } from "../actions";
+import UserListCard from "../components/UserListCard";
+import { notify } from "react-notify-toast";
 
-// export default
 class UserListDetail extends Component {
-  deleteListItem = (listItem) => {
-    this.deleteListItem(listItem);
+  deleteAList = (list) => {
+    this.props.deleteList(list);
+    notify.show("List was deleted", "warning");
   };
 
   render() {
@@ -39,7 +38,7 @@ class UserListDetail extends Component {
                   <UserListCard
                     listItem={li}
                     key={li.id}
-                    deleteListItem={this.deleteListItem(li)}
+                    deleteListItem={() => this.props.deleteAListItem(li)}
                   />
                 ))
               : null}
@@ -52,12 +51,15 @@ class UserListDetail extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    authentication: state.authentication,
     userlist: state.userlist,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  deleteListItem: (listItem) => dispatch(listActions.deleteListItem(listItem)),
+  deleteList: (list) => dispatch(listActions.deleteList(list)),
+  // deleteListItem: (listItem) => dispatch(listActions.deleteListItem(listItem)),
+  usersLists: () => dispatch(listActions.getUsersLists()),
 });
 
 export default connect(

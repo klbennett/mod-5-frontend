@@ -1,7 +1,9 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+
 import { connect } from "react-redux";
 import { listActions } from "../actions";
-import Notifications, { notify } from "react-notify-toast";
+import { notify } from "react-notify-toast";
 
 class ListCreationForm extends Component {
   constructor(props) {
@@ -35,7 +37,11 @@ class ListCreationForm extends Component {
     return (
       <>
         <div className="container">
-          <h1> Create a list to save your search results </h1>
+          <h1>
+            {" "}
+            Create a list to save your search results. You can view your saved
+            results in your <Link to="/profile">Profile</Link> at any time!
+          </h1>
           <div className="field has-addons">
             <div className="control">
               <input
